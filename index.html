@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ============================================================
+  PORTFOLIO TEMPLATE
+  ============================================================
+  Everything you need to change is marked with  << EDIT >>
+  Search the file for "<< EDIT >>" to find all of them.
+
+  Quick start:
+    1. Colours and fonts       -> :root block below
+    2. Page title / social     -> <head>
+    3. Name, role, tagline     -> Hero section
+    4. About text + skills     -> About section
+    5. Projects                -> Work section (copy a <article class="card"> to add more)
+    6. Links                   -> Contact section
+  ============================================================
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- << EDIT >> Page title and description (shows in browser tabs + Google) -->
+    <title>Full Name — Your Role</title>
+    <meta name="description" content="One sentence about who you are and what you make.">
+    <meta name="author" content="Full Name">
+    <meta name="theme-color" content="#1c1526">
+
+    <!-- << EDIT >> Link preview when shared on social / chat apps -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Full Name — Your Role">
+    <meta property="og:description" content="One sentence about who you are and what you make.">
+    <!-- <meta property="og:image" content="https://link-to-your-image.jpg"> -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- << EDIT >> Swap fonts here, then update --font-display / --font-body / --font-mono below -->
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Karla:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ==========================================================
+           << EDIT >>  THEME
+           Change these values and the whole site follows.
+           ========================================================== */
+        :root {
+            /* Colours */
+            --bg:            #1c1526;   /* page background        */
+            --bg-card:       #261d33;   /* cards, panels          */
+            --bg-elevated:   #2f2440;   /* modal                  */
+            --text:          #f3edf7;   /* main text              */
+            --text-muted:    #a496b4;   /* secondary text         */
+            --text-dim:      #7a6b8a;   /* captions, small labels */
+            --accent:        #f2a765;   /* highlight colour       */
+            --accent-2:      #e8788f;   /* second highlight       */
+            --accent-soft:   rgba(242, 167, 101, 0.13);
+            --border:        rgba(255,255,255,0.07);
+            --border-strong: rgba(255,255,255,0.14);
+
+            /* Fonts */
+            --font-display: 'Fraunces', Georgia, serif;
+            --font-body:    'Karla', system-ui, sans-serif;
+            --font-mono:    'IBM Plex Mono', ui-monospace, monospace;
+
+            /* Layout */
+            --maxw: 1000px;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            font-weight: 300;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection { background: var(--accent); color: var(--bg); }
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+        .skip-link {
+            position: absolute; left: 50%; top: -100px; transform: translateX(-50%);
+            background: var(--accent); color: var(--bg);
+            padding: 10px 20px; border-radius: 0 0 8px 8px;
+            z-index: 10000; text-decoration: none; font-size: 0.85rem;
+        }
+        .skip-link:focus { top: 0; }
+
+        /* ===== INTRO SCREEN =====
+           Delete the #intro div in the HTML if you don't want a loading screen. */
+        #intro {
+            position: fixed; inset: 0; z-index: 9999;
+            background: var(--bg);
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; overflow: hidden; cursor: pointer;
+        }
+        #intro.exit { animation: introExit 0.9s var(--ease) forwards; }
+        @keyframes introExit { to { opacity: 0; } }
+
+        .intro-line-top, .intro-line-bottom {
+            position: absolute; left: 50%; transform: translateX(-50%);
+            width: 1px; height: 0;
+            background: linear-gradient(var(--accent), transparent);
+        }
+        .intro-line-top { top: 0; animation: lineGrow 0.9s 0.15s var(--ease) forwards; }
+        .intro-line-bottom { bottom: 0; background: linear-gradient(transparent, var(--accent)); animation: lineGrow 0.9s 0.3s var(--ease) forwards; }
+        @keyframes lineGrow { to { height: 28vh; } }
+
+        .intro-name {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 8vw, 5rem);
+            font-weight: 700; letter-spacing: 0.01em;
+            display: flex; flex-wrap: wrap; justify-content: center;
+            overflow: hidden; padding: 0 1rem;
+        }
+        .intro-name .char {
+            display: inline-block; opacity: 0; transform: translateY(100%);
+            animation: charReveal 0.7s var(--ease) forwards;
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .intro-name .space { width: 0.3em; }
+        @keyframes charReveal { to { opacity: 1; transform: translateY(0); } }
+
+        .intro-subtitle {
+            font-family: var(--font-mono);
+            font-size: clamp(0.65rem, 2vw, 0.85rem);
+            letter-spacing: 0.45em; text-transform: uppercase;
+            color: var(--text-muted); margin-top: 1.5rem; padding-left: 0.45em;
+            opacity: 0; animation: subtitleIn 0.9s 1.3s var(--ease) forwards;
+        }
+        @keyframes subtitleIn {
+            from { opacity: 0; transform: translateY(15px); letter-spacing: 0.75em; }
+            to { opacity: 1; transform: translateY(0); letter-spacing: 0.45em; }
+        }
+
+        .intro-progress {
+            position: absolute; bottom: 10vh; left: 50%; transform: translateX(-50%);
+            width: 60px; height: 2px; background: rgba(255,255,255,0.08);
+            border-radius: 2px; overflow: hidden;
+        }
+        .intro-progress::after {
+            content: ''; display: block; height: 100%; width: 0;
+            background: var(--accent); border-radius: 2px;
+            animation: progressFill 2s 0.3s cubic-bezier(0.4,0,0.2,1) forwards;
+        }
+        @keyframes progressFill { to { width: 100%; } }
+
+        .intro-skip {
+            position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%);
+            font-family: var(--font-mono);
+            font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+            color: var(--text-dim); opacity: 0; animation: fadeIn 0.6s 1.8s forwards;
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        .grain {
+            position: absolute; inset: 0; pointer-events: none; opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* ===== NAV ===== */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 2rem;
+            background: color-mix(in srgb, var(--bg) 75%, transparent);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid transparent;
+            transform: translateY(-100%);
+            transition: transform 0.5s var(--ease), border-color 0.5s;
+        }
+        .nav.show { transform: translateY(0); border-bottom-color: var(--border); }
+        .nav-mark {
+            font-family: var(--font-display);
+            font-size: 1.05rem; font-weight: 700; letter-spacing: 0.06em;
+            color: var(--text); text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 1.75rem; }
+        .nav-links a {
+            font-family: var(--font-mono);
+            font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+            color: var(--text-muted); text-decoration: none; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        @media (max-width: 560px) {
+            .nav { padding: 0.85rem 1.25rem; }
+            .nav-links { gap: 1.1rem; }
+            .nav-links a { font-size: 0.64rem; letter-spacing: 0.1em; }
+        }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal, .reveal-scale {
+            opacity: 0; transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+        }
+        .reveal { transform: translateY(40px); }
+        .reveal-scale { transform: scale(0.94); }
+        .visible { opacity: 1 !important; transform: none !important; }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        /* << EDIT >> To use a photo instead of the gradient, uncomment the background line
+           below and delete the two gradients. Keep the brightness filter low so text stays readable. */
+        .hero-bg {
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(70% 55% at 50% 12%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 70%),
+                radial-gradient(80% 60% at 15% 85%, color-mix(in srgb, var(--accent-2) 22%, transparent), transparent 72%),
+                var(--bg);
+            /* background: url('your-photo.jpg') center/cover no-repeat;
+               filter: brightness(0.32) saturate(0.7); */
+            transform: scale(1.1);
+            transition: transform 9s ease-out;
+        }
+        .hero.loaded .hero-bg { transform: scale(1); }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg,
+                color-mix(in srgb, var(--bg) 35%, transparent) 0%,
+                color-mix(in srgb, var(--bg) 88%, transparent) 76%,
+                var(--bg) 100%);
+        }
+        .hero-content { position: relative; z-index: 2; text-align: center; padding: 6rem 2rem 2rem; max-width: 760px; }
+
+        /* Avatar: a monogram circle by default. Swap for an <img> if you have a photo. */
+        .hero-avatar {
+            width: 122px; height: 122px; border-radius: 50%;
+            object-fit: cover; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 2.25rem;
+            font-family: var(--font-display); font-size: 2.4rem; font-weight: 700;
+            color: var(--accent);
+            background: linear-gradient(150deg, var(--bg-card), var(--bg-elevated));
+            border: 2px solid var(--border-strong);
+            box-shadow: 0 0 60px color-mix(in srgb, var(--accent) 18%, transparent);
+            opacity: 0; transform: scale(0.85);
+            animation: avatarIn 1s 0.3s var(--ease) forwards;
+        }
+        @keyframes avatarIn { to { opacity: 1; transform: scale(1); } }
+
+        .hero-greeting {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.3rem);
+            font-weight: 600; line-height: 1.2; margin-bottom: 1.1rem;
+            opacity: 0; transform: translateY(30px);
+            animation: textIn 1s 0.6s var(--ease) forwards;
+        }
+        .hero-sub {
+            font-family: var(--font-mono);
+            font-size: 0.82rem; color: var(--text-muted);
+            letter-spacing: 0.16em; text-transform: uppercase;
+            opacity: 0; transform: translateY(20px);
+            animation: textIn 1s 0.85s var(--ease) forwards;
+        }
+        .hero-tagline {
+            margin: 1.5rem auto 0; color: var(--text-muted);
+            font-size: 1.05rem; max-width: 520px;
+            opacity: 0; transform: translateY(20px);
+            animation: textIn 1s 1.05s var(--ease) forwards;
+        }
+        @keyframes textIn { to { opacity: 1; transform: translateY(0); } }
+
+        .hero-actions {
+            display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2.25rem;
+            opacity: 0; transform: translateY(20px);
+            animation: textIn 1s 1.25s var(--ease) forwards;
+        }
+
+        .scroll-indicator {
+            position: absolute; bottom: 2.5rem; left: 50%;
+            transform: translateX(-50%); text-align: center;
+            opacity: 0; animation: fadeIn 1s 1.7s forwards;
+        }
+        .scroll-indicator span {
+            display: block; width: 1px; height: 46px;
+            background: linear-gradient(180deg, var(--accent), transparent);
+            margin: 0 auto; animation: scrollPulse 2s ease-in-out infinite;
+        }
+        .scroll-indicator p {
+            font-family: var(--font-mono);
+            font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+            color: var(--text-muted); margin-top: 10px;
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+            50% { opacity: 1; transform: scaleY(1); }
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 13px 30px; border-radius: 999px;
+            text-decoration: none; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em;
+            border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+            color: var(--accent); background: transparent; cursor: pointer;
+            font-family: var(--font-body);
+            transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease),
+                        border-color 0.35s, background 0.35s, color 0.35s;
+        }
+        .btn:hover {
+            border-color: var(--accent); background: var(--accent-soft);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px color-mix(in srgb, var(--accent) 20%, transparent);
+        }
+        .btn svg { width: 16px; height: 16px; transition: transform 0.3s; }
+        .btn:hover svg { transform: translateX(4px); }
+        .btn-ghost { border-color: var(--border-strong); color: var(--text-muted); }
+        .btn-ghost:hover { border-color: var(--text-muted); color: var(--text); background: rgba(255,255,255,0.05); }
+
+        /* ===== SECTIONS ===== */
+        .section { padding: 6rem 2rem; max-width: var(--maxw); margin: 0 auto; }
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.66rem; letter-spacing: 0.3em; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 1.35rem;
+            display: flex; align-items: center; gap: 14px;
+        }
+        .section-label::before { content: ''; width: 36px; height: 1px; background: var(--accent); }
+        .section-label.center { justify-content: center; }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 600; line-height: 1.3; margin-bottom: 1.75rem; max-width: 720px;
+        }
+        .section-text { color: var(--text-muted); font-size: 1.03rem; max-width: 640px; }
+        .section-text p + p { margin-top: 1.15rem; }
+
+        .divider {
+            width: 60px; height: 1px; margin: 0 auto;
+            background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+        }
+
+        /* ===== SKILLS ===== */
+        .toolkit { margin-top: 3rem; }
+        .toolkit h3 {
+            font-family: var(--font-mono);
+            font-size: 0.66rem; letter-spacing: 0.26em; text-transform: uppercase;
+            color: var(--text-dim); font-weight: 500; margin-bottom: 1rem;
+        }
+        .toolkit-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.75rem; }
+        .tool {
+            font-family: var(--font-mono); font-size: 0.73rem;
+            padding: 6px 14px; border-radius: 999px;
+            border: 1px solid var(--border); background: var(--bg-card); color: var(--text-muted);
+            transition: border-color 0.3s, color 0.3s, transform 0.3s var(--ease);
+        }
+        .tool:hover {
+            border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+            color: var(--text); transform: translateY(-2px);
+        }
+
+        /* ===== FILTERS ===== */
+        .filters { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+        .filter {
+            font-family: var(--font-mono);
+            font-size: 0.7rem; letter-spacing: 0.13em; text-transform: uppercase;
+            padding: 8px 18px; border-radius: 999px;
+            border: 1px solid var(--border); background: transparent; color: var(--text-muted);
+            cursor: pointer; transition: border-color 0.3s, color 0.3s, background 0.3s;
+        }
+        .filter:hover { color: var(--text); border-color: var(--border-strong); }
+        .filter.on {
+            color: var(--accent);
+            border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+            background: var(--accent-soft);
+        }
+
+        /* ===== PROJECT CARDS ===== */
+        .projects-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 1.75rem; margin-top: 2.5rem;
+        }
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; overflow: hidden; position: relative;
+            display: flex; flex-direction: column;
+            transition: transform 0.5s var(--ease), border-color 0.4s, box-shadow 0.5s var(--ease);
+        }
+        .card.is-hidden { display: none; }
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: color-mix(in srgb, var(--accent) 28%, transparent);
+            box-shadow: 0 20px 55px rgba(0,0,0,0.45);
+        }
+        .card-link { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; }
+
+        /* Each card sets --h (a hue, 0-360) for its own cover tint. */
+        .cover {
+            position: relative; height: 168px; overflow: hidden;
+            background:
+                radial-gradient(120% 100% at 20% 0%, hsla(var(--h, 30), 70%, 58%, 0.24), transparent 62%),
+                linear-gradient(160deg, var(--bg-elevated), var(--bg-card));
+            display: flex; align-items: center; justify-content: center;
+        }
+        .cover::before {
+            content: ''; position: absolute; inset: 0;
+            background-image:
+                repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 34px),
+                repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 34px);
+            mask-image: radial-gradient(90% 90% at 30% 20%, #000, transparent);
+            -webkit-mask-image: radial-gradient(90% 90% at 30% 20%, #000, transparent);
+        }
+        /* If a card has a real image, it replaces the monogram automatically. */
+        .cover img {
+            position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.7s var(--ease);
+        }
+        .card:hover .cover img { transform: scale(1.06); }
+        .cover img ~ .cover-mark { display: none; }
+        .cover:has(img)::after {
+            content: ''; position: absolute; inset: 0; z-index: 1;
+            background: linear-gradient(180deg, transparent 45%, color-mix(in srgb, var(--bg) 80%, transparent) 100%);
+        }
+        .cover-mark {
+            position: relative; z-index: 1;
+            font-family: var(--font-display); font-size: 3rem; font-weight: 700;
+            color: hsla(var(--h, 30), 78%, 74%, 0.5);
+            transition: color 0.5s, transform 0.6s var(--ease);
+        }
+        .card:hover .cover-mark { color: hsla(var(--h, 30), 82%, 78%, 0.8); transform: translateY(-3px); }
+        .cover-tag {
+            position: absolute; left: 14px; bottom: 12px; z-index: 2;
+            font-family: var(--font-mono);
+            font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--text-muted);
+            background: color-mix(in srgb, var(--bg) 70%, transparent);
+            backdrop-filter: blur(6px);
+            padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border);
+        }
+
+        .card-body { padding: 1.5rem; position: relative; flex: 1; display: flex; flex-direction: column; }
+        .card-body h3 {
+            font-family: var(--font-display);
+            font-size: 1.28rem; font-weight: 600; margin-bottom: 0.45rem; padding-right: 2.5rem;
+        }
+        .card-body p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.65; flex: 1; }
+        .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.1rem; }
+        .chips li {
+            font-family: var(--font-mono); font-size: 0.64rem;
+            color: var(--text-dim); border: 1px solid var(--border);
+            padding: 3px 9px; border-radius: 6px;
+        }
+        .arrow {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            width: 30px; height: 30px; border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .card:hover .arrow { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+        .arrow svg { width: 13px; height: 13px; }
+
+        /* ===== CONTACT ===== */
+        .contact-section { text-align: center; padding: 6rem 2rem 4rem; }
+        .contact-section .section-title { margin-left: auto; margin-right: auto; text-align: center; }
+        .contact-note { color: var(--text-muted); max-width: 480px; margin: 0 auto 2.25rem; font-size: 1rem; }
+        .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2.25rem; }
+        .social-link {
+            width: 52px; height: 52px; border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-muted); text-decoration: none; background: transparent; cursor: pointer;
+            transition: border-color 0.35s, color 0.35s, transform 0.35s var(--ease), box-shadow 0.35s;
+        }
+        .social-link:hover {
+            border-color: var(--accent); color: var(--accent); transform: translateY(-4px);
+            box-shadow: 0 8px 25px color-mix(in srgb, var(--accent) 18%, transparent);
+        }
+        .social-link svg { width: 21px; height: 21px; }
+
+        footer {
+            text-align: center; padding: 2rem;
+            border-top: 1px solid var(--border);
+            font-family: var(--font-mono);
+            font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.06em;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 9998;
+            background: rgba(0,0,0,0.72); backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity 0.35s var(--ease), visibility 0.35s;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
+        .modal-box {
+            background: var(--bg-elevated); border: 1px solid var(--border);
+            border-radius: 20px; padding: 2.75rem;
+            max-width: 400px; width: 90%; text-align: center;
+            transform: scale(0.92) translateY(18px);
+            transition: transform 0.4s var(--ease);
+        }
+        .modal-overlay.active .modal-box { transform: scale(1) translateY(0); }
+        .modal-box h3 { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 0.9rem; }
+        .modal-box p { color: var(--text-muted); margin-bottom: 1.75rem; font-size: 0.93rem; }
+
+        /* ===== CURSOR GLOW ===== */
+        .cursor-glow {
+            position: fixed; top: 0; left: 0; width: 420px; height: 420px;
+            border-radius: 50%; pointer-events: none; z-index: 0;
+            background: radial-gradient(circle, color-mix(in srgb, var(--accent) 7%, transparent) 0%, transparent 70%);
+            transform: translate(-600px, -600px);
+            opacity: 0; transition: opacity 0.4s;
+        }
+        @media (hover: hover) and (pointer: fine) { .cursor-glow { opacity: 1; } }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            .section { padding: 4.5rem 1.5rem; }
+            .contact-section { padding: 4.5rem 1.5rem 3rem; }
+            .projects-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+            .hero-avatar { width: 100px; height: 100px; font-size: 2rem; }
+            .hero-content { padding-top: 5rem; }
+            .social-links { gap: 1rem; }
+        }
+
+        /* ===== REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+            }
+            .reveal, .reveal-scale { opacity: 1; transform: none; }
+            .hero-bg { transform: scale(1); }
+            .cursor-glow { display: none; }
+        }
+    </style>
+
+    <noscript>
+        <style>
+            #intro { display: none; }
+            .reveal, .reveal-scale { opacity: 1; transform: none; }
+            .hero-avatar, .hero-greeting, .hero-sub, .hero-tagline, .hero-actions, .scroll-indicator { opacity: 1; transform: none; }
+            .nav { transform: translateY(0); border-bottom-color: var(--border); }
+        </style>
+    </noscript>
+</head>
+<body>
+
+    <a href="#main" class="skip-link">Skip to content</a>
+    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+    <!-- ===== INTRO SCREEN ===== -->
+    <!-- << EDIT >> Change data-name below. Delete this whole div to remove the intro. -->
+    <div id="intro" role="presentation">
+        <div class="grain"></div>
+        <div class="intro-line-top"></div>
+        <div class="intro-name" id="introName" data-name="Full Name" aria-hidden="true"></div>
+        <div class="intro-subtitle">Portfolio</div>
+        <div class="intro-progress"></div>
+        <div class="intro-skip">Click to skip</div>
+        <div class="intro-line-bottom"></div>
+    </div>
+
+    <!-- ===== NAV ===== -->
+    <nav class="nav" id="nav">
+        <!-- << EDIT >> Your initials or a short wordmark -->
+        <a href="#top" class="nav-mark">FN</a>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#work">Work</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="top">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-overlay" aria-hidden="true"></div>
+        <div class="hero-content">
+
+            <!-- << EDIT >> Monogram circle. To use a photo instead, replace this whole
+                 div with:  <img src="photo.jpg" alt="Portrait of Full Name" class="hero-avatar"> -->
+            <div class="hero-avatar" aria-hidden="true">FN</div>
+
+            <!-- << EDIT >> Name, one-line role, and a sentence about what you do -->
+            <h1 class="hero-greeting">Hi, I'm Full&nbsp;Name</h1>
+            <p class="hero-sub">Your role · Your school or city</p>
+            <p class="hero-tagline">One or two sentences on what you make and why. Keep it plain — say the actual thing you do, not an adjective about it.</p>
+
+            <div class="hero-actions">
+                <a href="#work" class="btn">
+                    See my work
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+                <!-- << EDIT >> Link to a CV, or delete this button -->
+                <a href="#" class="btn btn-ghost">View CV</a>
+            </div>
+        </div>
+        <div class="scroll-indicator" aria-hidden="true">
+            <span></span>
+            <p>Scroll</p>
+        </div>
+    </section>
+
+    <main id="main">
+
+    <!-- ===== ABOUT ===== -->
+    <section class="section" id="about">
+        <div class="reveal">
+            <div class="section-label">About</div>
+        </div>
+
+        <!-- << EDIT >> A headline that says something specific, not "About me" -->
+        <h2 class="section-title reveal" style="transition-delay:0.08s">
+            A short line that says what you're actually&nbsp;like.
+        </h2>
+
+        <!-- << EDIT >> Two or three short paragraphs. Concrete beats impressive. -->
+        <div class="section-text reveal" style="transition-delay:0.16s">
+            <p>First paragraph: what got you into this, or the question you keep coming back to. One specific example does more work here than a list of adjectives.</p>
+            <p>Second paragraph: the areas you work across and the tools you reach for. Name real things you've used.</p>
+            <p>Third paragraph: where you are now — studying, learning, building in your own time, looking for work. Say it plainly.</p>
+        </div>
+
+        <!-- << EDIT >> Skills. Add, remove, or rename rows freely. -->
+        <div class="toolkit reveal" style="transition-delay:0.24s">
+            <h3>Building with</h3>
+            <div class="toolkit-row">
+                <span class="tool">Skill</span>
+                <span class="tool">Skill</span>
+                <span class="tool">Skill</span>
+                <span class="tool">Skill</span>
+                <span class="tool">Skill</span>
+                <span class="tool">Skill</span>
+            </div>
+            <h3>Also comfortable with</h3>
+            <div class="toolkit-row">
+                <span class="tool">Skill</span>
+                <span class="tool">Skill</span>
+                <span class="tool">Skill</span>
+                <span class="tool">Skill</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== WORK ===== -->
+    <section class="section" id="work">
+        <div class="reveal">
+            <div class="section-label">Work</div>
+        </div>
+        <h2 class="section-title reveal" style="transition-delay:0.08s">A headline for your&nbsp;projects</h2>
+        <p class="section-text reveal" style="transition-delay:0.14s">One line introducing the section. Mention that visitors can filter if you keep the buttons.</p>
+
+        <!-- << EDIT >> Filter buttons.
+             The data-filter value must match the data-cat on the cards below.
+             Delete this whole block if you don't want filtering. -->
+        <div class="filters reveal" style="transition-delay:0.2s" role="group" aria-label="Filter projects by category">
+            <button class="filter on" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter" data-filter="one" aria-pressed="false">Category one</button>
+            <button class="filter" data-filter="two" aria-pressed="false">Category two</button>
+            <button class="filter" data-filter="three" aria-pressed="false">Category three</button>
+        </div>
+
+        <div class="projects-grid" id="grid">
+
+            <!-- ===== PROJECT CARD =====
+                 Copy one of these to add a project. Three things to set:
+                   data-cat  -> which filter it belongs to
+                   --h       -> hue 0-360 for the cover tint (0 red, 30 orange, 120 green, 210 blue, 280 purple)
+                   href      -> where the card links to
+
+                 No link yet? Change <a class="card-link" href="..."> to <div class="card-link">
+                 and delete the <span class="arrow"> block.
+
+                 Have a screenshot? Put this as the first thing inside <div class="cover">:
+                   <img src="shot.jpg" alt="" loading="lazy" onerror="this.remove();">
+                 The monogram hides itself automatically when an image is there.
+            -->
+
+            <article class="card reveal-scale" data-cat="one" style="--h: 30; transition-delay:0.05s">
+                <a class="card-link" href="#" target="_blank" rel="noopener">
+                    <div class="cover">
+                        <span class="cover-mark" aria-hidden="true">P1</span>
+                        <span class="cover-tag">Category one</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Project name</h3>
+                        <p>Two or three sentences. What is it, who is it for, and what was the interesting problem in it? Write it so someone outside your field understands.</p>
+                        <ul class="chips"><li>Tool</li><li>Tool</li><li>Tool</li></ul>
+                        <span class="arrow" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="card reveal-scale" data-cat="one" style="--h: 345; transition-delay:0.1s">
+                <a class="card-link" href="#" target="_blank" rel="noopener">
+                    <div class="cover">
+                        <span class="cover-mark" aria-hidden="true">P2</span>
+                        <span class="cover-tag">Category one</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Project name</h3>
+                        <p>Two or three sentences. What is it, who is it for, and what was the interesting problem in it?</p>
+                        <ul class="chips"><li>Tool</li><li>Tool</li></ul>
+                        <span class="arrow" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="card reveal-scale" data-cat="two" style="--h: 265; transition-delay:0.15s">
+                <a class="card-link" href="#" target="_blank" rel="noopener">
+                    <div class="cover">
+                        <span class="cover-mark" aria-hidden="true">P3</span>
+                        <span class="cover-tag">Category two</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Project name</h3>
+                        <p>Two or three sentences. What is it, who is it for, and what was the interesting problem in it?</p>
+                        <ul class="chips"><li>Tool</li><li>Tool</li><li>Tool</li></ul>
+                        <span class="arrow" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="card reveal-scale" data-cat="two" style="--h: 190; transition-delay:0.2s">
+                <a class="card-link" href="#" target="_blank" rel="noopener">
+                    <div class="cover">
+                        <span class="cover-mark" aria-hidden="true">P4</span>
+                        <span class="cover-tag">Category two</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Project name</h3>
+                        <p>Two or three sentences. What is it, who is it for, and what was the interesting problem in it?</p>
+                        <ul class="chips"><li>Tool</li><li>Tool</li></ul>
+                        <span class="arrow" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </span>
+                    </div>
+                </a>
+            </article>
+
+            <article class="card reveal-scale" data-cat="three" style="--h: 55; transition-delay:0.25s">
+                <a class="card-link" href="#" target="_blank" rel="noopener">
+                    <div class="cover">
+                        <span class="cover-mark" aria-hidden="true">P5</span>
+                        <span class="cover-tag">Category three</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Project name</h3>
+                        <p>Two or three sentences. What is it, who is it for, and what was the interesting problem in it?</p>
+                        <ul class="chips"><li>Tool</li><li>Tool</li><li>Tool</li></ul>
+                        <span class="arrow" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </span>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Example of a card with no link yet — note the <div> and the missing arrow. -->
+            <article class="card reveal-scale" data-cat="three" style="--h: 310; transition-delay:0.3s">
+                <div class="card-link">
+                    <div class="cover">
+                        <span class="cover-mark" aria-hidden="true">P6</span>
+                        <span class="cover-tag">Category three</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Project name</h3>
+                        <p>Use this version for work that isn't online — a film, a paper, something in progress. It looks the same but isn't clickable.</p>
+                        <ul class="chips"><li>Tool</li><li>Tool</li></ul>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="contact-section" id="contact">
+        <div class="reveal">
+            <div class="section-label center">Contact</div>
+        </div>
+        <h2 class="section-title reveal" style="transition-delay:0.08s">Let's get in touch</h2>
+        <p class="contact-note reveal" style="transition-delay:0.14s">
+            <!-- << EDIT >> Say what you're open to and the best way to reach you. -->
+            One or two lines: what kind of work you're open to, and where to reach you fastest.
+        </p>
+        <div class="social-links reveal" style="transition-delay:0.2s">
+
+            <!-- << EDIT >> Replace the # with real links. Delete any you don't use. -->
+            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Email">
+                <svg fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </a>
+
+            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
+                <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
+            </a>
+
+            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+                <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+
+            <!-- A button that opens the modal instead of linking anywhere.
+                 Useful for a profile that doesn't exist yet. -->
+            <button type="button" class="social-link" id="modalBtn" aria-label="Instagram — not available yet">
+                <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.72a6.12 6.12 0 100 12.24 6.12 6.12 0 000-12.24zm0 10.09a3.97 3.97 0 110-7.94 3.97 3.97 0 010 7.94zm7.79-10.34a1.43 1.43 0 11-2.86 0 1.43 1.43 0 012.86 0z"/></svg>
+            </button>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- << EDIT >> Footer line. The year fills in automatically. -->
+    <footer>
+        © <span id="year">2026</span> Full Name
+    </footer>
+
+    <!-- ===== MODAL ===== -->
+    <div id="modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-box">
+            <!-- << EDIT >> Modal heading and message -->
+            <h3 id="modalTitle">Not set up yet</h3>
+            <p>Short explanation of what's missing and where to find you instead.</p>
+            <button type="button" class="btn" id="modalClose">Close</button>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        'use strict';
+
+        var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* ---- Intro screen ---- */
+        var intro = document.getElementById('intro');
+        var hero = document.getElementById('top');
+        var introName = document.getElementById('introName');
+        var introDone = false;
+
+        if (intro && introName) {
+            // Name comes from the data-name attribute on #introName.
+            (introName.getAttribute('data-name') || '').split('').forEach(function (ch, i) {
+                var span = document.createElement('span');
+                if (ch === ' ') {
+                    span.className = 'char space';
+                    span.innerHTML = '&nbsp;';
+                } else {
+                    span.className = 'char';
+                    span.textContent = ch;
+                }
+                span.style.animationDelay = (0.5 + i * 0.035) + 's';
+                introName.appendChild(span);
+            });
+        }
+
+        function endIntro() {
+            if (introDone) return;
+            introDone = true;
+            if (intro) {
+                intro.classList.add('exit');
+                setTimeout(function () { intro.style.display = 'none'; }, 900);
+            }
+            if (hero) hero.classList.add('loaded');
+        }
+
+        if (intro) {
+            intro.addEventListener('click', endIntro);
+            window.addEventListener('keydown', function (e) {
+                if (!introDone && (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ')) endIntro();
+            });
+            window.addEventListener('wheel', endIntro, { passive: true, once: true });
+            window.addEventListener('touchstart', endIntro, { passive: true, once: true });
+            setTimeout(endIntro, reduceMotion ? 300 : 2600);   // how long the intro lasts
+            setTimeout(endIntro, 6000);                        // safety net
+        } else {
+            endIntro();
+        }
+
+        /* ---- Scroll reveal ---- */
+        var revealEls = document.querySelectorAll('.reveal, .reveal-scale');
+        if ('IntersectionObserver' in window && !reduceMotion) {
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            revealEls.forEach(function (el) { observer.observe(el); });
+        } else {
+            revealEls.forEach(function (el) { el.classList.add('visible'); });
+        }
+
+        /* ---- Nav appears after the hero ---- */
+        var nav = document.getElementById('nav');
+        if (nav) {
+            var onScroll = function () {
+                nav.classList.toggle('show', window.scrollY > window.innerHeight * 0.7);
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        }
+
+        /* ---- Project filters ---- */
+        var filters = document.querySelectorAll('.filter');
+        var cards = document.querySelectorAll('#grid .card');
+        filters.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var cat = btn.getAttribute('data-filter');
+                filters.forEach(function (b) {
+                    var on = b === btn;
+                    b.classList.toggle('on', on);
+                    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+                });
+                cards.forEach(function (card) {
+                    var show = cat === 'all' || card.getAttribute('data-cat') === cat;
+                    card.classList.toggle('is-hidden', !show);
+                    if (show) card.classList.add('visible');
+                });
+            });
+        });
+
+        /* ---- Cursor glow ---- */
+        var glow = document.getElementById('cursorGlow');
+        if (glow && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion) {
+            var gx = 0, gy = 0, cx = 0, cy = 0, raf = null;
+            var follow = function () {
+                cx += (gx - cx) * 0.12;
+                cy += (gy - cy) * 0.12;
+                glow.style.transform = 'translate(' + (cx - 210) + 'px,' + (cy - 210) + 'px)';
+                raf = (Math.abs(gx - cx) > 0.5 || Math.abs(gy - cy) > 0.5) ? requestAnimationFrame(follow) : null;
+            };
+            document.addEventListener('mousemove', function (e) {
+                gx = e.clientX; gy = e.clientY;
+                if (!raf) raf = requestAnimationFrame(follow);
+            });
+        }
+
+        /* ---- Modal ---- */
+        var modal = document.getElementById('modal');
+        var modalBtn = document.getElementById('modalBtn');
+        var modalClose = document.getElementById('modalClose');
+        var lastFocus = null;
+        if (modal && modalBtn && modalClose) {
+            var openModal = function () {
+                lastFocus = document.activeElement;
+                modal.classList.add('active');
+                modal.setAttribute('aria-hidden', 'false');
+                modalClose.focus();
+            };
+            var closeModal = function () {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+                if (lastFocus) lastFocus.focus();
+            };
+            modalBtn.addEventListener('click', openModal);
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+            window.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+            });
+        }
+
+        /* ---- Year ---- */
+        var year = document.getElementById('year');
+        if (year) year.textContent = new Date().getFullYear();
+    })();
+    </script>
+
+</body>
+</html>
