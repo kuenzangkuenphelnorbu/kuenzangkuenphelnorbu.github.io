@@ -4,57 +4,38 @@
   ============================================================
   PORTFOLIO TEMPLATE
   ============================================================
-  Everything you need to change is marked with  << EDIT >>
-  Search the file for "<< EDIT >>" to find all of them.
-
-  Quick start:
-    1. Colours and fonts       -> :root block below
-    2. Page title / social     -> <head>
-    3. Name, role, tagline     -> Hero section
-    4. About text + skills     -> About section
-    5. Projects                -> Work section (copy a <article class="card"> to add more)
-    6. Links                   -> Contact section
-  ============================================================
 -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- << EDIT >> Page title and description (shows in browser tabs + Google) -->
-    <title>Full Name — Your Role</title>
-    <meta name="description" content="One sentence about who you are and what you make.">
-    <meta name="author" content="Full Name">
+    <title>Kuenzang Kuenphel Norbu</title>
+    <meta name="description" content="A relentless problem solver driven by curiosity, precision, and an unyielding commitment to excellence.">
+    <meta name="author" content="Kuenzang Kuenphel Norbu">
     <meta name="theme-color" content="#1c1526">
 
-    <!-- << EDIT >> Link preview when shared on social / chat apps -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Full Name — Your Role">
-    <meta property="og:description" content="One sentence about who you are and what you make.">
-    <!-- <meta property="og:image" content="https://link-to-your-image.jpg"> -->
+    <meta property="og:title" content="Kuenzang Kuenphel Norbu">
+    <meta property="og:description" content="A relentless problem solver driven by curiosity, precision, and an unyielding commitment to excellence.">
     <meta name="twitter:card" content="summary_large_image">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- << EDIT >> Swap fonts here, then update --font-display / --font-body / --font-mono below -->
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Karla:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* ==========================================================
-           << EDIT >>  THEME
-           Change these values and the whole site follows.
-           ========================================================== */
         :root {
             /* Colours */
-            --bg:            #1c1526;   /* page background        */
-            --bg-card:       #261d33;   /* cards, panels          */
-            --bg-elevated:   #2f2440;   /* modal                  */
-            --text:          #f3edf7;   /* main text              */
-            --text-muted:    #a496b4;   /* secondary text         */
-            --text-dim:      #7a6b8a;   /* captions, small labels */
-            --accent:        #f2a765;   /* highlight colour       */
-            --accent-2:      #e8788f;   /* second highlight       */
+            --bg:            #1c1526;
+            --bg-card:       #261d33;
+            --bg-elevated:   #2f2440;
+            --text:          #f3edf7;
+            --text-muted:    #a496b4;
+            --text-dim:      #7a6b8a;
+            --accent:        #f2a765;
+            --accent-2:      #e8788f;
             --accent-soft:   rgba(242, 167, 101, 0.13);
             --border:        rgba(255,255,255,0.07);
             --border-strong: rgba(255,255,255,0.14);
@@ -91,8 +72,6 @@
         }
         .skip-link:focus { top: 0; }
 
-        /* ===== INTRO SCREEN =====
-           Delete the #intro div in the HTML if you don't want a loading screen. */
         #intro {
             position: fixed; inset: 0; z-index: 9999;
             background: var(--bg);
@@ -164,7 +143,6 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
-        /* ===== NAV ===== */
         .nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 900;
             display: flex; align-items: center; justify-content: space-between;
@@ -194,7 +172,6 @@
             .nav-links a { font-size: 0.64rem; letter-spacing: 0.1em; }
         }
 
-        /* ===== SCROLL REVEAL ===== */
         .reveal, .reveal-scale {
             opacity: 0; transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
         }
@@ -202,21 +179,16 @@
         .reveal-scale { transform: scale(0.94); }
         .visible { opacity: 1 !important; transform: none !important; }
 
-        /* ===== HERO ===== */
         .hero {
             min-height: 100vh; display: flex; align-items: center; justify-content: center;
             position: relative; overflow: hidden;
         }
-        /* << EDIT >> To use a photo instead of the gradient, uncomment the background line
-           below and delete the two gradients. Keep the brightness filter low so text stays readable. */
         .hero-bg {
             position: absolute; inset: 0;
             background:
                 radial-gradient(70% 55% at 50% 12%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 70%),
                 radial-gradient(80% 60% at 15% 85%, color-mix(in srgb, var(--accent-2) 22%, transparent), transparent 72%),
                 var(--bg);
-            /* background: url('your-photo.jpg') center/cover no-repeat;
-               filter: brightness(0.32) saturate(0.7); */
             transform: scale(1.1);
             transition: transform 9s ease-out;
         }
@@ -230,7 +202,6 @@
         }
         .hero-content { position: relative; z-index: 2; text-align: center; padding: 6rem 2rem 2rem; max-width: 760px; }
 
-        /* Avatar: a monogram circle by default. Swap for an <img> if you have a photo. */
         .hero-avatar {
             width: 122px; height: 122px; border-radius: 50%;
             object-fit: cover; display: flex; align-items: center; justify-content: center;
@@ -293,7 +264,6 @@
             50% { opacity: 1; transform: scaleY(1); }
         }
 
-        /* ===== BUTTONS ===== */
         .btn {
             display: inline-flex; align-items: center; gap: 10px;
             padding: 13px 30px; border-radius: 999px;
@@ -314,7 +284,6 @@
         .btn-ghost { border-color: var(--border-strong); color: var(--text-muted); }
         .btn-ghost:hover { border-color: var(--text-muted); color: var(--text); background: rgba(255,255,255,0.05); }
 
-        /* ===== SECTIONS ===== */
         .section { padding: 6rem 2rem; max-width: var(--maxw); margin: 0 auto; }
         .section-label {
             font-family: var(--font-mono);
@@ -337,7 +306,6 @@
             background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
         }
 
-        /* ===== SKILLS ===== */
         .toolkit { margin-top: 3rem; }
         .toolkit h3 {
             font-family: var(--font-mono);
@@ -356,7 +324,6 @@
             color: var(--text); transform: translateY(-2px);
         }
 
-        /* ===== FILTERS ===== */
         .filters { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
         .filter {
             font-family: var(--font-mono);
@@ -372,7 +339,6 @@
             background: var(--accent-soft);
         }
 
-        /* ===== PROJECT CARDS ===== */
         .projects-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
             gap: 1.75rem; margin-top: 2.5rem;
@@ -391,7 +357,6 @@
         }
         .card-link { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; }
 
-        /* Each card sets --h (a hue, 0-360) for its own cover tint. */
         .cover {
             position: relative; height: 168px; overflow: hidden;
             background:
@@ -407,7 +372,6 @@
             mask-image: radial-gradient(90% 90% at 30% 20%, #000, transparent);
             -webkit-mask-image: radial-gradient(90% 90% at 30% 20%, #000, transparent);
         }
-        /* If a card has a real image, it replaces the monogram automatically. */
         .cover img {
             position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
             transition: transform 0.7s var(--ease);
@@ -457,7 +421,6 @@
         .card:hover .arrow { background: var(--accent); border-color: var(--accent); color: var(--bg); }
         .arrow svg { width: 13px; height: 13px; }
 
-        /* ===== CONTACT ===== */
         .contact-section { text-align: center; padding: 6rem 2rem 4rem; }
         .contact-section .section-title { margin-left: auto; margin-right: auto; text-align: center; }
         .contact-note { color: var(--text-muted); max-width: 480px; margin: 0 auto 2.25rem; font-size: 1rem; }
@@ -482,7 +445,6 @@
             font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.06em;
         }
 
-        /* ===== MODAL ===== */
         .modal-overlay {
             position: fixed; inset: 0; z-index: 9998;
             background: rgba(0,0,0,0.72); backdrop-filter: blur(8px);
@@ -502,7 +464,6 @@
         .modal-box h3 { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 0.9rem; }
         .modal-box p { color: var(--text-muted); margin-bottom: 1.75rem; font-size: 0.93rem; }
 
-        /* ===== CURSOR GLOW ===== */
         .cursor-glow {
             position: fixed; top: 0; left: 0; width: 420px; height: 420px;
             border-radius: 50%; pointer-events: none; z-index: 0;
@@ -512,7 +473,6 @@
         }
         @media (hover: hover) and (pointer: fine) { .cursor-glow { opacity: 1; } }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 640px) {
             .section { padding: 4.5rem 1.5rem; }
             .contact-section { padding: 4.5rem 1.5rem 3rem; }
@@ -522,7 +482,6 @@
             .social-links { gap: 1rem; }
         }
 
-        /* ===== REDUCED MOTION ===== */
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
             *, *::before, *::after {
@@ -550,22 +509,18 @@
     <a href="#main" class="skip-link">Skip to content</a>
     <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
-    <!-- ===== INTRO SCREEN ===== -->
-    <!-- << EDIT >> Change data-name below. Delete this whole div to remove the intro. -->
     <div id="intro" role="presentation">
         <div class="grain"></div>
         <div class="intro-line-top"></div>
-        <div class="intro-name" id="introName" data-name="Full Name" aria-hidden="true"></div>
+        <div class="intro-name" id="introName" data-name="Kuenzang Kuenphel Norbu" aria-hidden="true"></div>
         <div class="intro-subtitle">Portfolio</div>
         <div class="intro-progress"></div>
         <div class="intro-skip">Click to skip</div>
         <div class="intro-line-bottom"></div>
     </div>
 
-    <!-- ===== NAV ===== -->
     <nav class="nav" id="nav">
-        <!-- << EDIT >> Your initials or a short wordmark -->
-        <a href="#top" class="nav-mark">FN</a>
+        <a href="#top" class="nav-mark">KKN</a>
         <div class="nav-links">
             <a href="#about">About</a>
             <a href="#work">Work</a>
@@ -573,27 +528,22 @@
         </div>
     </nav>
 
-    <!-- ===== HERO ===== -->
     <section class="hero" id="top">
         <div class="hero-bg" aria-hidden="true"></div>
         <div class="hero-overlay" aria-hidden="true"></div>
         <div class="hero-content">
 
-            <!-- << EDIT >> Monogram circle. To use a photo instead, replace this whole
-                 div with:  <img src="photo.jpg" alt="Portrait of Full Name" class="hero-avatar"> -->
-            <div class="hero-avatar" aria-hidden="true">FN</div>
+            <div class="hero-avatar" aria-hidden="true">KKN</div>
 
-            <!-- << EDIT >> Name, one-line role, and a sentence about what you do -->
-            <h1 class="hero-greeting">Hi, I'm Full&nbsp;Name</h1>
-            <p class="hero-sub">Your role · Your school or city</p>
-            <p class="hero-tagline">One or two sentences on what you make and why. Keep it plain — say the actual thing you do, not an adjective about it.</p>
+            <h1 class="hero-greeting">Hi, I'm Kuenzang Kuenphel Norbu</h1>
+            <p class="hero-sub">Thimphu, Bhutan</p>
+            <p class="hero-tagline">A relentless problem solver driven by curiosity, precision, and an unyielding commitment to excellence.</p>
 
             <div class="hero-actions">
                 <a href="#work" class="btn">
                     See my work
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
-                <!-- << EDIT >> Link to a CV, or delete this button -->
                 <a href="#" class="btn btn-ghost">View CV</a>
             </div>
         </div>
@@ -605,25 +555,20 @@
 
     <main id="main">
 
-    <!-- ===== ABOUT ===== -->
     <section class="section" id="about">
         <div class="reveal">
             <div class="section-label">About</div>
         </div>
 
-        <!-- << EDIT >> A headline that says something specific, not "About me" -->
         <h2 class="section-title reveal" style="transition-delay:0.08s">
-            A short line that says what you're actually&nbsp;like.
+            A relentless problem solver driven by curiosity, precision, and an unyielding commitment to excellence.
         </h2>
 
-        <!-- << EDIT >> Two or three short paragraphs. Concrete beats impressive. -->
         <div class="section-text reveal" style="transition-delay:0.16s">
-            <p>First paragraph: what got you into this, or the question you keep coming back to. One specific example does more work here than a list of adjectives.</p>
-            <p>Second paragraph: the areas you work across and the tools you reach for. Name real things you've used.</p>
-            <p>Third paragraph: where you are now — studying, learning, building in your own time, looking for work. Say it plainly.</p>
+            <p>By leaning into genuine curiosity and learning from every person I’ve crossed paths with, I’ve unlocked doors I never knew existed, turning everyday interactions into stepping stones. That relentless drive to understand the world and connect with others is what shaped my journey so far and it’s far from over. With an unwavering commitment to constant growth, I am always looking forward, eager to refine my craft, embrace new challenges, and keep evolving into a better version of myself every single day.</p>
+            <p>Most of what I've learned to date is self-taught, and it is the best part of my journey. I am continuously learning how to learn and adapt, which is the most important skill of all.</p>
         </div>
 
-        <!-- << EDIT >> Skills. Add, remove, or rename rows freely. -->
         <div class="toolkit reveal" style="transition-delay:0.24s">
             <h3>Building with</h3>
             <div class="toolkit-row">
@@ -631,65 +576,37 @@
                 <span class="tool">Skill</span>
                 <span class="tool">Skill</span>
                 <span class="tool">Skill</span>
-                <span class="tool">Skill</span>
-                <span class="tool">Skill</span>
-            </div>
-            <h3>Also comfortable with</h3>
-            <div class="toolkit-row">
-                <span class="tool">Skill</span>
-                <span class="tool">Skill</span>
-                <span class="tool">Skill</span>
-                <span class="tool">Skill</span>
             </div>
         </div>
     </section>
 
     <div class="divider"></div>
 
-    <!-- ===== WORK ===== -->
     <section class="section" id="work">
         <div class="reveal">
             <div class="section-label">Work</div>
         </div>
-        <h2 class="section-title reveal" style="transition-delay:0.08s">A headline for your&nbsp;projects</h2>
-        <p class="section-text reveal" style="transition-delay:0.14s">One line introducing the section. Mention that visitors can filter if you keep the buttons.</p>
+        <h2 class="section-title reveal" style="transition-delay:0.08s">My Projects</h2>
+        <p class="section-text reveal" style="transition-delay:0.14s">A selection of my recent works.</p>
 
-        <!-- << EDIT >> Filter buttons.
-             The data-filter value must match the data-cat on the cards below.
-             Delete this whole block if you don't want filtering. -->
         <div class="filters reveal" style="transition-delay:0.2s" role="group" aria-label="Filter projects by category">
             <button class="filter on" data-filter="all" aria-pressed="true">All</button>
-            <button class="filter" data-filter="one" aria-pressed="false">Category one</button>
-            <button class="filter" data-filter="two" aria-pressed="false">Category two</button>
-            <button class="filter" data-filter="three" aria-pressed="false">Category three</button>
+            <button class="filter" data-filter="web" aria-pressed="false">Web</button>
+            <button class="filter" data-filter="software" aria-pressed="false">Software</button>
         </div>
 
         <div class="projects-grid" id="grid">
 
-            <!-- ===== PROJECT CARD =====
-                 Copy one of these to add a project. Three things to set:
-                   data-cat  -> which filter it belongs to
-                   --h       -> hue 0-360 for the cover tint (0 red, 30 orange, 120 green, 210 blue, 280 purple)
-                   href      -> where the card links to
-
-                 No link yet? Change <a class="card-link" href="..."> to <div class="card-link">
-                 and delete the <span class="arrow"> block.
-
-                 Have a screenshot? Put this as the first thing inside <div class="cover">:
-                   <img src="shot.jpg" alt="" loading="lazy" onerror="this.remove();">
-                 The monogram hides itself automatically when an image is there.
-            -->
-
-            <article class="card reveal-scale" data-cat="one" style="--h: 30; transition-delay:0.05s">
+            <article class="card reveal-scale" data-cat="web" style="--h: 30; transition-delay:0.05s">
                 <a class="card-link" href="#" target="_blank" rel="noopener">
                     <div class="cover">
                         <span class="cover-mark" aria-hidden="true">P1</span>
-                        <span class="cover-tag">Category one</span>
+                        <span class="cover-tag">Web</span>
                     </div>
                     <div class="card-body">
-                        <h3>Project name</h3>
-                        <p>Two or three sentences. What is it, who is it for, and what was the interesting problem in it? Write it so someone outside your field understands.</p>
-                        <ul class="chips"><li>Tool</li><li>Tool</li><li>Tool</li></ul>
+                        <h3>Project Name</h3>
+                        <p>A description of the project, the problem it solves, and the technologies used.</p>
+                        <ul class="chips"><li>Tool</li><li>Tool</li></ul>
                         <span class="arrow" aria-hidden="true">
                             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
                         </span>
@@ -697,87 +614,21 @@
                 </a>
             </article>
 
-            <article class="card reveal-scale" data-cat="one" style="--h: 345; transition-delay:0.1s">
+            <article class="card reveal-scale" data-cat="software" style="--h: 210; transition-delay:0.1s">
                 <a class="card-link" href="#" target="_blank" rel="noopener">
                     <div class="cover">
                         <span class="cover-mark" aria-hidden="true">P2</span>
-                        <span class="cover-tag">Category one</span>
+                        <span class="cover-tag">Software</span>
                     </div>
                     <div class="card-body">
-                        <h3>Project name</h3>
-                        <p>Two or three sentences. What is it, who is it for, and what was the interesting problem in it?</p>
+                        <h3>Project Name</h3>
+                        <p>A description of the project, the problem it solves, and the technologies used.</p>
                         <ul class="chips"><li>Tool</li><li>Tool</li></ul>
                         <span class="arrow" aria-hidden="true">
                             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
                         </span>
                     </div>
                 </a>
-            </article>
-
-            <article class="card reveal-scale" data-cat="two" style="--h: 265; transition-delay:0.15s">
-                <a class="card-link" href="#" target="_blank" rel="noopener">
-                    <div class="cover">
-                        <span class="cover-mark" aria-hidden="true">P3</span>
-                        <span class="cover-tag">Category two</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Project name</h3>
-                        <p>Two or three sentences. What is it, who is it for, and what was the interesting problem in it?</p>
-                        <ul class="chips"><li>Tool</li><li>Tool</li><li>Tool</li></ul>
-                        <span class="arrow" aria-hidden="true">
-                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </span>
-                    </div>
-                </a>
-            </article>
-
-            <article class="card reveal-scale" data-cat="two" style="--h: 190; transition-delay:0.2s">
-                <a class="card-link" href="#" target="_blank" rel="noopener">
-                    <div class="cover">
-                        <span class="cover-mark" aria-hidden="true">P4</span>
-                        <span class="cover-tag">Category two</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Project name</h3>
-                        <p>Two or three sentences. What is it, who is it for, and what was the interesting problem in it?</p>
-                        <ul class="chips"><li>Tool</li><li>Tool</li></ul>
-                        <span class="arrow" aria-hidden="true">
-                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </span>
-                    </div>
-                </a>
-            </article>
-
-            <article class="card reveal-scale" data-cat="three" style="--h: 55; transition-delay:0.25s">
-                <a class="card-link" href="#" target="_blank" rel="noopener">
-                    <div class="cover">
-                        <span class="cover-mark" aria-hidden="true">P5</span>
-                        <span class="cover-tag">Category three</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Project name</h3>
-                        <p>Two or three sentences. What is it, who is it for, and what was the interesting problem in it?</p>
-                        <ul class="chips"><li>Tool</li><li>Tool</li><li>Tool</li></ul>
-                        <span class="arrow" aria-hidden="true">
-                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </span>
-                    </div>
-                </a>
-            </article>
-
-            <!-- Example of a card with no link yet — note the <div> and the missing arrow. -->
-            <article class="card reveal-scale" data-cat="three" style="--h: 310; transition-delay:0.3s">
-                <div class="card-link">
-                    <div class="cover">
-                        <span class="cover-mark" aria-hidden="true">P6</span>
-                        <span class="cover-tag">Category three</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Project name</h3>
-                        <p>Use this version for work that isn't online — a film, a paper, something in progress. It looks the same but isn't clickable.</p>
-                        <ul class="chips"><li>Tool</li><li>Tool</li></ul>
-                    </div>
-                </div>
             </article>
 
         </div>
@@ -785,55 +636,32 @@
 
     <div class="divider"></div>
 
-    <!-- ===== CONTACT ===== -->
     <section class="contact-section" id="contact">
         <div class="reveal">
             <div class="section-label center">Contact</div>
         </div>
         <h2 class="section-title reveal" style="transition-delay:0.08s">Let's get in touch</h2>
         <p class="contact-note reveal" style="transition-delay:0.14s">
-            <!-- << EDIT >> Say what you're open to and the best way to reach you. -->
-            One or two lines: what kind of work you're open to, and where to reach you fastest.
+            The fastest way to reach me is via email or GitHub.
         </p>
         <div class="social-links reveal" style="transition-delay:0.2s">
 
-            <!-- << EDIT >> Replace the # with real links. Delete any you don't use. -->
-            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Email">
+            <a href="mailto:your.email@example.com" target="_blank" rel="noopener" class="social-link" aria-label="Email">
                 <svg fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             </a>
 
-            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
+            <a href="https://github.com/yourusername" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
                 <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
             </a>
 
-            <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-                <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            </a>
-
-            <!-- A button that opens the modal instead of linking anywhere.
-                 Useful for a profile that doesn't exist yet. -->
-            <button type="button" class="social-link" id="modalBtn" aria-label="Instagram — not available yet">
-                <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.72a6.12 6.12 0 100 12.24 6.12 6.12 0 000-12.24zm0 10.09a3.97 3.97 0 110-7.94 3.97 3.97 0 010 7.94zm7.79-10.34a1.43 1.43 0 11-2.86 0 1.43 1.43 0 012.86 0z"/></svg>
-            </button>
         </div>
     </section>
 
     </main>
 
-    <!-- << EDIT >> Footer line. The year fills in automatically. -->
     <footer>
-        © <span id="year">2026</span> Full Name
+        © <span id="year">2026</span> Kuenzang Kuenphel Norbu
     </footer>
-
-    <!-- ===== MODAL ===== -->
-    <div id="modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
-        <div class="modal-box">
-            <!-- << EDIT >> Modal heading and message -->
-            <h3 id="modalTitle">Not set up yet</h3>
-            <p>Short explanation of what's missing and where to find you instead.</p>
-            <button type="button" class="btn" id="modalClose">Close</button>
-        </div>
-    </div>
 
     <script>
     (function () {
@@ -841,14 +669,12 @@
 
         var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        /* ---- Intro screen ---- */
         var intro = document.getElementById('intro');
         var hero = document.getElementById('top');
         var introName = document.getElementById('introName');
         var introDone = false;
 
         if (intro && introName) {
-            // Name comes from the data-name attribute on #introName.
             (introName.getAttribute('data-name') || '').split('').forEach(function (ch, i) {
                 var span = document.createElement('span');
                 if (ch === ' ') {
@@ -880,13 +706,12 @@
             });
             window.addEventListener('wheel', endIntro, { passive: true, once: true });
             window.addEventListener('touchstart', endIntro, { passive: true, once: true });
-            setTimeout(endIntro, reduceMotion ? 300 : 2600);   // how long the intro lasts
-            setTimeout(endIntro, 6000);                        // safety net
+            setTimeout(endIntro, reduceMotion ? 300 : 2600);   
+            setTimeout(endIntro, 6000);                        
         } else {
             endIntro();
         }
 
-        /* ---- Scroll reveal ---- */
         var revealEls = document.querySelectorAll('.reveal, .reveal-scale');
         if ('IntersectionObserver' in window && !reduceMotion) {
             var observer = new IntersectionObserver(function (entries) {
@@ -902,7 +727,6 @@
             revealEls.forEach(function (el) { el.classList.add('visible'); });
         }
 
-        /* ---- Nav appears after the hero ---- */
         var nav = document.getElementById('nav');
         if (nav) {
             var onScroll = function () {
@@ -912,7 +736,6 @@
             onScroll();
         }
 
-        /* ---- Project filters ---- */
         var filters = document.querySelectorAll('.filter');
         var cards = document.querySelectorAll('#grid .card');
         filters.forEach(function (btn) {
@@ -931,7 +754,6 @@
             });
         });
 
-        /* ---- Cursor glow ---- */
         var glow = document.getElementById('cursorGlow');
         if (glow && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion) {
             var gx = 0, gy = 0, cx = 0, cy = 0, raf = null;
@@ -947,32 +769,6 @@
             });
         }
 
-        /* ---- Modal ---- */
-        var modal = document.getElementById('modal');
-        var modalBtn = document.getElementById('modalBtn');
-        var modalClose = document.getElementById('modalClose');
-        var lastFocus = null;
-        if (modal && modalBtn && modalClose) {
-            var openModal = function () {
-                lastFocus = document.activeElement;
-                modal.classList.add('active');
-                modal.setAttribute('aria-hidden', 'false');
-                modalClose.focus();
-            };
-            var closeModal = function () {
-                modal.classList.remove('active');
-                modal.setAttribute('aria-hidden', 'true');
-                if (lastFocus) lastFocus.focus();
-            };
-            modalBtn.addEventListener('click', openModal);
-            modalClose.addEventListener('click', closeModal);
-            modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-            window.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
-            });
-        }
-
-        /* ---- Year ---- */
         var year = document.getElementById('year');
         if (year) year.textContent = new Date().getFullYear();
     })();
