@@ -185,10 +185,7 @@
         }
         .hero-bg {
             position: absolute; inset: 0;
-            background:
-                radial-gradient(70% 55% at 50% 12%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 70%),
-                radial-gradient(80% 60% at 15% 85%, color-mix(in srgb, var(--accent-2) 22%, transparent), transparent 72%),
-                var(--bg);
+            background: linear-gradient(rgba(28, 21, 38, 0.7), rgba(28, 21, 38, 0.9)), url('https://i.postimg.cc/pLkxv7tc/IMG20260528220950.jpg') center/cover no-repeat;
             transform: scale(1.1);
             transition: transform 9s ease-out;
         }
@@ -196,8 +193,8 @@
         .hero-overlay {
             position: absolute; inset: 0;
             background: linear-gradient(180deg,
-                color-mix(in srgb, var(--bg) 35%, transparent) 0%,
-                color-mix(in srgb, var(--bg) 88%, transparent) 76%,
+                color-mix(in srgb, var(--bg) 15%, transparent) 0%,
+                color-mix(in srgb, var(--bg) 70%, transparent) 76%,
                 var(--bg) 100%);
         }
         .hero-content { position: relative; z-index: 2; text-align: center; padding: 6rem 2rem 2rem; max-width: 760px; }
@@ -404,7 +401,42 @@
             font-family: var(--font-display);
             font-size: 1.28rem; font-weight: 600; margin-bottom: 0.45rem; padding-right: 2.5rem;
         }
-        .card-body p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.65; flex: 1; }
+        
+        .desc-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .card-desc { 
+            color: var(--text-muted); 
+            font-size: 0.88rem; 
+            line-height: 1.65; 
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card-desc.expanded {
+            -webkit-line-clamp: unset;
+        }
+        .see-more-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            margin-top: 0.6rem;
+            padding: 0;
+            transition: color 0.3s ease;
+        }
+        .see-more-btn:hover {
+            color: var(--text);
+        }
+
         .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.1rem; }
         .chips li {
             font-family: var(--font-mono); font-size: 0.64rem;
@@ -572,10 +604,10 @@
         <div class="toolkit reveal" style="transition-delay:0.24s">
             <h3>Building with</h3>
             <div class="toolkit-row">
-                <span class="tool">Skill</span>
-                <span class="tool">Skill</span>
-                <span class="tool">Skill</span>
-                <span class="tool">Skill</span>
+                <span class="tool">Machine Learning</span>
+                <span class="tool">Data Science</span>
+                <span class="tool">Coding</span>
+                <span class="tool">Mathematics</span>
             </div>
         </div>
     </section>
@@ -591,22 +623,35 @@
 
         <div class="filters reveal" style="transition-delay:0.2s" role="group" aria-label="Filter projects by category">
             <button class="filter on" data-filter="all" aria-pressed="true">All</button>
-            <button class="filter" data-filter="web" aria-pressed="false">Web</button>
-            <button class="filter" data-filter="software" aria-pressed="false">Software</button>
+            <button class="filter" data-filter="ml-ds" aria-pressed="false">Machine Learning And Data Science</button>
+            <button class="filter" data-filter="entrepreneurship" aria-pressed="false">Entrepreneurship</button>
+            <button class="filter" data-filter="leadership" aria-pressed="false">Leadership and Communication</button>
+            <button class="filter" data-filter="technology" aria-pressed="false">Technology</button>
         </div>
 
         <div class="projects-grid" id="grid">
 
-            <article class="card reveal-scale" data-cat="web" style="--h: 30; transition-delay:0.05s">
+            <!-- Project 1 -->
+            <article class="card reveal-scale" data-cat="ml-ds" style="--h: 30; transition-delay:0.05s">
                 <a class="card-link" href="#" target="_blank" rel="noopener">
                     <div class="cover">
-                        <span class="cover-mark" aria-hidden="true">P1</span>
-                        <span class="cover-tag">Web</span>
+                        <img src="https://i.postimg.cc/zXxbtxcD/images.png" alt="Singapore International Mathematics Computational Challenge">
+                        <span class="cover-tag">ML & Data Science</span>
                     </div>
                     <div class="card-body">
-                        <h3>Project Name</h3>
-                        <p>A description of the project, the problem it solves, and the technologies used.</p>
-                        <ul class="chips"><li>Tool</li><li>Tool</li></ul>
+                        <h3>Singapore International Mathematics Computational Challenge</h3>
+                        
+                        <div class="desc-wrapper">
+                            <p class="card-desc">The Singapore International Mathematics Challenge (SIMC) is a global competition where student teams tackle complex, real-world mathematical modeling and data science problems. Rather than taking standard paper-and-pen exams, participants work collaboratively over an intensive period to analyze high-dimensional datasets, apply advanced linear algebra and computational algorithms, and extract hidden patterns from scientific data. The challenge culminates in a comprehensive written report, an interactive oral presentation, and a Q&A defense session before a panel of expert judges.</p>
+                            <button class="see-more-btn" onclick="event.preventDefault(); toggleDescription(this)">See more</button>
+                        </div>
+                        
+                        <ul class="chips">
+                            <li>Coding</li>
+                            <li>Mathematics</li>
+                            <li>Data Science</li>
+                            <li>Machine Learning</li>
+                        </ul>
                         <span class="arrow" aria-hidden="true">
                             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
                         </span>
@@ -614,16 +659,167 @@
                 </a>
             </article>
 
-            <article class="card reveal-scale" data-cat="software" style="--h: 210; transition-delay:0.1s">
+            <!-- Project 2 -->
+            <article class="card reveal-scale" data-cat="entrepreneurship" style="--h: 210; transition-delay:0.1s">
                 <a class="card-link" href="#" target="_blank" rel="noopener">
                     <div class="cover">
-                        <span class="cover-mark" aria-hidden="true">P2</span>
-                        <span class="cover-tag">Software</span>
+                        <img src="https://i.postimg.cc/k4Dq5ycJ/Stickers.jpg" alt="Sticker Printing Business">
+                        <span class="cover-tag">Entrepreneurship</span>
                     </div>
                     <div class="card-body">
-                        <h3>Project Name</h3>
-                        <p>A description of the project, the problem it solves, and the technologies used.</p>
-                        <ul class="chips"><li>Tool</li><li>Tool</li></ul>
+                        <h3>Sticker Printing Business</h3>
+                        
+                        <div class="desc-wrapper">
+                            <p class="card-desc">Our business grew out of a simple goal: helping students and teachers bring their creative ideas to life. We take custom design requests from around our school community and bring them to reality using the tools and space in our aesthetic center. It’s very much a learning process, but making real items for real people gives us an awesome, hands-on way to understand what running a small business actually takes. More than anything, it’s a team effort—we're figuring out how to balance our strengths, troubleshoot unexpected mistakes together, and learn from each other every step of the way.</p>
+                            <button class="see-more-btn" onclick="event.preventDefault(); toggleDescription(this)">See more</button>
+                        </div>
+
+                        <ul class="chips">
+                            <li>Business</li>
+                            <li>Teamwork</li>
+                            <li>Design</li>
+                            <li>Problem Solving</li>
+                        </ul>
+                        <span class="arrow" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </span>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Project 3: Automated Read-Aloud Assessment -->
+            <article class="card reveal-scale" data-cat="ml-ds" style="--h: 150; transition-delay:0.15s">
+                <a class="card-link" href="#" target="_blank" rel="noopener">
+                    <div class="cover">
+                        <img src="https://i.postimg.cc/y62GfYx2/Screenshot-2026-08-30-at-2-52-20-PM.png" alt="Automated Read-Aloud Assessment">
+                        <span class="cover-tag">ML & Data Science</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Automated Read-Aloud Assessment</h3>
+                        
+                        <div class="desc-wrapper">
+                            <p class="card-desc">In our school, teachers simply lack the time to listen to every student's read-aloud assignment. It isn't their fault, but it means struggling students might go unnoticed. To solve this, we built an automated tool to filter these recordings and identify who needs help. We trained our machine learning model directly on the audio of Bhutanese students. This is crucial because it preserves our natural Bhutanese accent which our school emphasizes rather than judging students against foreign pronunciations. A teacher simply inputs a student's recording, and the program instantly flags whether they are fluent or need assistance. By eliminating the need to listen to every single audio file, this tool saves teachers countless hours. Instead of grading everyone, teachers can focus their time directly on helping the specific students who need assistance to speak and read better.</p>
+                            <button class="see-more-btn" onclick="event.preventDefault(); toggleDescription(this)">See more</button>
+                        </div>
+
+                        <ul class="chips">
+                            <li>Machine Learning</li>
+                            <li>Audio Processing</li>
+                            <li>Education</li>
+                            <li>Python</li>
+                        </ul>
+                        <span class="arrow" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </span>
+                    </div>
+                </a>
+            </article>
+            
+            <!-- Project 4: Athletic Meet 2025 -->
+            <article class="card reveal-scale" data-cat="leadership" style="--h: 280; transition-delay:0.2s">
+                <a class="card-link" href="#" target="_blank" rel="noopener">
+                    <div class="cover">
+                        <img src="https://i.postimg.cc/2jT6vM5D/Copy-of-Copy-of-IMG-9008.jpg" alt="Athletic Meet 2025">
+                        <span class="cover-tag">Leadership & Comms</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Athletic Meet 2025</h3>
+                        
+                        <div class="desc-wrapper">
+                            <p class="card-desc">The Two Days Athletic Meet was organized by The Royal Academy in collaboration with the Bhutan Amateur Athletics Federation (BAAF) on the 10th and 11th of October, 2025, at The Royal Academy. The event brought together participants from nine different schools across the country, creating a vibrant platform for students to showcase their athletic talents, learn from one another, and build lasting friendships. The main objective of the event was to promote active participation in sports and athletics while encouraging students to embrace discipline, teamwork, and perseverance. More than just a competition, the athletic meet aimed to inspire holistic development helping students grow physically, socially, emotionally, cerebrally, and spiritually. It served as an opportunity for young learners to realize the value of sportsmanship, resilience, and collaboration, aligning with The Royal Academy’s curriculum (Bhutan Baccalaureate) of nurturing well-rounded individuals who strive to become the best versions of themselves.</p>
+                            <button class="see-more-btn" onclick="event.preventDefault(); toggleDescription(this)">See more</button>
+                        </div>
+
+                        <ul class="chips">
+                            <li>Leadership</li>
+                            <li>Event Management</li>
+                            <li>Teamwork</li>
+                            <li>Sportsmanship</li>
+                        </ul>
+                        <span class="arrow" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </span>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Project 5: Green Accelerator -->
+            <article class="card reveal-scale" data-cat="leadership" style="--h: 110; transition-delay:0.25s">
+                <a class="card-link" href="#" target="_blank" rel="noopener">
+                    <div class="cover">
+                        <img src="https://i.postimg.cc/JnSW-cNS3/Screenshot-2026-08-30-at-3-07-41-PM.png" alt="Green Accelerator">
+                        <span class="cover-tag">Leadership & Comms</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Green Accelerator</h3>
+                        
+                        <div class="desc-wrapper">
+                            <p class="card-desc">This project seeks to closely collaborate with local communities across Bhutan to document and share their indigenous cultural practices that embody principles of environmental preservation and harmony with nature. These practices—rooted in spiritual values, traditional wisdom, and lived experiences—reflect a sustainable way of life that is deeply embedded in Bhutanese identity. While Bhutan is globally recognized for its environmental leadership—enshrined in our Constitution, Gross National Happiness framework, and carbon-negative status—the spiritual and cultural foundations of this ethos are fading among younger generations. This project aims to bridge that gap by reconnecting youth with ancestral wisdom and showcasing the beauty, truth, and practicality of living in tune with nature. The outcomes will be compiled into multimedia resources—short films, digital archives, and reflective writings.</p>
+                            <button class="see-more-btn" onclick="event.preventDefault(); toggleDescription(this)">See more</button>
+                        </div>
+
+                        <ul class="chips">
+                            <li>Leadership</li>
+                            <li>Environment</li>
+                            <li>Community</li>
+                            <li>Culture</li>
+                        </ul>
+                        <span class="arrow" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </span>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Project 6: e-Yantra -->
+            <article class="card reveal-scale" data-cat="technology" style="--h: 200; transition-delay:0.3s">
+                <a class="card-link" href="#" target="_blank" rel="noopener">
+                    <div class="cover">
+                        <img src="https://i.postimg.cc/QCLdxZN1/Screenshot-2026-08-30-at-3-21-38-PM.png" alt="e-Yantra">
+                        <span class="cover-tag">Technology</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>e-Yantra</h3>
+                        
+                        <div class="desc-wrapper">
+                            <p class="card-desc">The e-Yantra Virtual Museum Competition is an innovative initiative by IIT Bombay that bridges the gap between historical preservation and modern engineering. It empowers students to step beyond traditional textbooks by training them in advanced digital tools like photogrammetry, Blender, and 3D modeling. Through this hands-on competition, participants learn to accurately document physical artifacts, conduct deep historical research, and design interactive virtual exhibitions. Ultimately, the program transforms young engineers and historians into digital storytellers, ensuring that cultural heritage is preserved and made accessible to a global audience.</p>
+                            <button class="see-more-btn" onclick="event.preventDefault(); toggleDescription(this)">See more</button>
+                        </div>
+
+                        <ul class="chips">
+                            <li>3D Modeling</li>
+                            <li>Blender</li>
+                            <li>Photogrammetry</li>
+                            <li>Digital Storytelling</li>
+                        </ul>
+                        <span class="arrow" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                        </span>
+                    </div>
+                </a>
+            </article>
+            
+            <!-- Project 7: Mathematics Webcast -->
+            <article class="card reveal-scale" data-cat="leadership" style="--h: 60; transition-delay:0.35s">
+                <a class="card-link" href="#" target="_blank" rel="noopener">
+                    <div class="cover">
+                        <img src="https://i.postimg.cc/Pq3M72X7/Screenshot-2026-08-30-at-3-27-41-PM.png" alt="Mathematics Webcast">
+                        <span class="cover-tag">Leadership & Comms</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Mathematics Webcast</h3>
+                        
+                        <div class="desc-wrapper">
+                            <p class="card-desc">Mathematics Beyond the Classroom explores mathematics as more than a subject confined to textbooks and classrooms, presenting it as a universal language that connects nature, technology, culture, daily life, and personal growth. Through perspectives from students, an alumnus studying Mathematics and Data Science, and a professional in the automotive industry, the webcast highlights how mathematical concepts such as the Fibonacci sequence, symmetry, geometry, proportional reasoning, and data analysis are applied in real-world situations. Personal experiences demonstrate how mathematics can support decision-making, preserve cultural traditions, manage resources, and develop important qualities such as discipline, persistence, and focus. Overall, the webcast encourages listeners to recognize mathematics as an integral part of everyday life and as a powerful tool for understanding and engaging with the world.</p>
+                            <button class="see-more-btn" onclick="event.preventDefault(); toggleDescription(this)">See more</button>
+                        </div>
+
+                        <ul class="chips">
+                            <li>Communication</li>
+                            <li>Podcast/Webcast</li>
+                            <li>Mathematics</li>
+                            <li>Leadership</li>
+                        </ul>
                         <span class="arrow" aria-hidden="true">
                             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
                         </span>
@@ -664,6 +860,17 @@
     </footer>
 
     <script>
+    window.toggleDescription = function(btn) {
+        var descText = btn.previousElementSibling;
+        if (descText.classList.contains('expanded')) {
+            descText.classList.remove('expanded');
+            btn.textContent = 'See more';
+        } else {
+            descText.classList.add('expanded');
+            btn.textContent = 'See less';
+        }
+    };
+
     (function () {
         'use strict';
 
