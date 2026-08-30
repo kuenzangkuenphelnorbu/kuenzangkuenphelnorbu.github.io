@@ -2,7 +2,7 @@
 <html lang="en">
 <!--
   ============================================================
-  PORTFOLIO TEMPLATE
+  PORTFOLIO TEMPLATE (CYAN THEME)
   ============================================================
 -->
 <head>
@@ -12,7 +12,7 @@
     <title>Kuenzang Kuenphel Norbu</title>
     <meta name="description" content="A relentless problem solver driven by curiosity, precision, and an unyielding commitment to excellence.">
     <meta name="author" content="Kuenzang Kuenphel Norbu">
-    <meta name="theme-color" content="#1c1526">
+    <meta name="theme-color" content="#09171a">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Kuenzang Kuenphel Norbu">
@@ -27,16 +27,16 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            /* Colours */
-            --bg:            #1c1526;
-            --bg-card:       #261d33;
-            --bg-elevated:   #2f2440;
-            --text:          #f3edf7;
-            --text-muted:    #a496b4;
-            --text-dim:      #7a6b8a;
-            --accent:        #f2a765;
-            --accent-2:      #e8788f;
-            --accent-soft:   rgba(242, 167, 101, 0.13);
+            /* Colours - Cyan Theme */
+            --bg:            #09171a;
+            --bg-card:       #112328;
+            --bg-elevated:   #183038;
+            --text:          #e6f3f5;
+            --text-muted:    #89adb5;
+            --text-dim:      #63868e;
+            --accent:        #00e6e6;
+            --accent-2:      #00b3b3;
+            --accent-soft:   rgba(0, 230, 230, 0.13);
             --border:        rgba(255,255,255,0.07);
             --border-strong: rgba(255,255,255,0.14);
 
@@ -185,7 +185,7 @@
         }
         .hero-bg {
             position: absolute; inset: 0;
-            background: linear-gradient(rgba(28, 21, 38, 0.7), rgba(28, 21, 38, 0.9)), url('https://i.postimg.cc/pLkxv7tc/IMG20260528220950.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(9, 23, 26, 0.7), rgba(9, 23, 26, 0.9)), url('https://i.postimg.cc/pLkxv7tc/IMG20260528220950.jpg') center/cover no-repeat;
             transform: scale(1.1);
             transition: transform 9s ease-out;
         }
@@ -321,6 +321,12 @@
             color: var(--text); transform: translateY(-2px);
         }
 
+        /* Category Base Colors */
+        .card[data-cat="ml-ds"] { --card-accent: #60a5fa; --h: 215; }
+        .card[data-cat="entrepreneurship"] { --card-accent: #4ade80; --h: 140; }
+        .card[data-cat="leadership"] { --card-accent: #fbbf24; --h: 40; }
+        .card[data-cat="technology"] { --card-accent: #f472b6; --h: 330; } /* Changed from purple to pink */
+
         .filters { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
         .filter {
             font-family: var(--font-mono);
@@ -336,6 +342,20 @@
             background: var(--accent-soft);
         }
 
+        /* Filter Active States mapped to Categories */
+        .filter[data-filter="ml-ds"].on {
+            color: #60a5fa; border-color: color-mix(in srgb, #60a5fa 45%, transparent); background: color-mix(in srgb, #60a5fa 10%, transparent);
+        }
+        .filter[data-filter="entrepreneurship"].on {
+            color: #4ade80; border-color: color-mix(in srgb, #4ade80 45%, transparent); background: color-mix(in srgb, #4ade80 10%, transparent);
+        }
+        .filter[data-filter="leadership"].on {
+            color: #fbbf24; border-color: color-mix(in srgb, #fbbf24 45%, transparent); background: color-mix(in srgb, #fbbf24 10%, transparent);
+        }
+        .filter[data-filter="technology"].on {
+            color: #f472b6; border-color: color-mix(in srgb, #f472b6 45%, transparent); background: color-mix(in srgb, #f472b6 10%, transparent);
+        }
+
         .projects-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
             gap: 1.75rem; margin-top: 2.5rem;
@@ -349,7 +369,7 @@
         .card.is-hidden { display: none; }
         .card:hover {
             transform: translateY(-6px);
-            border-color: color-mix(in srgb, var(--accent) 28%, transparent);
+            border-color: color-mix(in srgb, var(--card-accent, var(--accent)) 45%, transparent);
             box-shadow: 0 20px 55px rgba(0,0,0,0.45);
         }
         .card-link { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; }
@@ -386,14 +406,16 @@
             transition: color 0.5s, transform 0.6s var(--ease);
         }
         .card:hover .cover-mark { color: hsla(var(--h, 30), 82%, 78%, 0.8); transform: translateY(-3px); }
+        
         .cover-tag {
             position: absolute; left: 14px; bottom: 12px; z-index: 2;
             font-family: var(--font-mono);
             font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
-            color: var(--text-muted);
+            color: var(--card-accent, var(--text-muted));
             background: color-mix(in srgb, var(--bg) 70%, transparent);
             backdrop-filter: blur(6px);
-            padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border);
+            padding: 4px 10px; border-radius: 999px; 
+            border: 1px solid color-mix(in srgb, var(--card-accent, var(--border)) 30%, transparent);
         }
 
         .card-body { padding: 1.5rem; position: relative; flex: 1; display: flex; flex-direction: column; }
@@ -423,7 +445,7 @@
         .see-more-btn {
             background: none;
             border: none;
-            color: var(--accent);
+            color: var(--card-accent, var(--accent));
             font-family: var(--font-mono);
             font-size: 0.7rem;
             text-transform: uppercase;
@@ -442,7 +464,13 @@
             font-family: var(--font-mono); font-size: 0.64rem;
             color: var(--text-dim); border: 1px solid var(--border);
             padding: 3px 9px; border-radius: 6px;
+            transition: border-color 0.3s, color 0.3s;
         }
+        .card:hover .chips li {
+            border-color: color-mix(in srgb, var(--card-accent, var(--border)) 40%, transparent);
+            color: var(--text-muted);
+        }
+
         .arrow {
             position: absolute; top: 1.5rem; right: 1.5rem;
             width: 30px; height: 30px; border-radius: 50%;
@@ -450,7 +478,11 @@
             display: flex; align-items: center; justify-content: center;
             transition: background 0.3s, border-color 0.3s, color 0.3s;
         }
-        .card:hover .arrow { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+        .card:hover .arrow { 
+            background: var(--card-accent, var(--accent)); 
+            border-color: var(--card-accent, var(--accent)); 
+            color: var(--bg); 
+        }
         .arrow svg { width: 13px; height: 13px; }
 
         .contact-section { text-align: center; padding: 6rem 2rem 4rem; }
@@ -476,25 +508,6 @@
             font-family: var(--font-mono);
             font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.06em;
         }
-
-        .modal-overlay {
-            position: fixed; inset: 0; z-index: 9998;
-            background: rgba(0,0,0,0.72); backdrop-filter: blur(8px);
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden; pointer-events: none;
-            transition: opacity 0.35s var(--ease), visibility 0.35s;
-        }
-        .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
-        .modal-box {
-            background: var(--bg-elevated); border: 1px solid var(--border);
-            border-radius: 20px; padding: 2.75rem;
-            max-width: 400px; width: 90%; text-align: center;
-            transform: scale(0.92) translateY(18px);
-            transition: transform 0.4s var(--ease);
-        }
-        .modal-overlay.active .modal-box { transform: scale(1) translateY(0); }
-        .modal-box h3 { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 0.9rem; }
-        .modal-box p { color: var(--text-muted); margin-bottom: 1.75rem; font-size: 0.93rem; }
 
         .cursor-glow {
             position: fixed; top: 0; left: 0; width: 420px; height: 420px;
@@ -632,8 +645,8 @@
         <div class="projects-grid" id="grid">
 
             <!-- Project 1 -->
-            <article class="card reveal-scale" data-cat="ml-ds" style="--h: 30; transition-delay:0.05s">
-                <a class="card-link" href="#" target="_blank" rel="noopener">
+            <article class="card reveal-scale" data-cat="ml-ds" style="transition-delay:0.05s">
+                <a class="card-link" href="https://drive.google.com/drive/folders/15iC7anXgdsFeWnm78_K2px40T6guBg4b?usp=sharing" target="_blank" rel="noopener">
                     <div class="cover">
                         <img src="https://i.postimg.cc/zXxbtxcD/images.png" alt="Singapore International Mathematics Computational Challenge">
                         <span class="cover-tag">ML & Data Science</span>
@@ -652,16 +665,20 @@
                             <li>Data Science</li>
                             <li>Machine Learning</li>
                         </ul>
-                        <span class="arrow" aria-hidden="true">
-                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </span>
+
+                        <div style="margin-top: 1.5rem;">
+                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                                View Folder
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
+                        </div>
                     </div>
                 </a>
             </article>
 
             <!-- Project 2 -->
-            <article class="card reveal-scale" data-cat="entrepreneurship" style="--h: 210; transition-delay:0.1s">
-                <a class="card-link" href="#" target="_blank" rel="noopener">
+            <article class="card reveal-scale" data-cat="entrepreneurship" style="transition-delay:0.1s">
+                <a class="card-link" href="https://drive.google.com/drive/folders/1hQ81qGu8MqK2a8hqzC9UWLpdnUYtR3XC?usp=sharing" target="_blank" rel="noopener">
                     <div class="cover">
                         <img src="https://i.postimg.cc/k4Dq5ycJ/Stickers.jpg" alt="Sticker Printing Business">
                         <span class="cover-tag">Entrepreneurship</span>
@@ -680,16 +697,20 @@
                             <li>Design</li>
                             <li>Problem Solving</li>
                         </ul>
-                        <span class="arrow" aria-hidden="true">
-                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </span>
+
+                        <div style="margin-top: 1.5rem;">
+                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                                View Folder
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
+                        </div>
                     </div>
                 </a>
             </article>
 
             <!-- Project 3: Automated Read-Aloud Assessment -->
-            <article class="card reveal-scale" data-cat="ml-ds" style="--h: 150; transition-delay:0.15s">
-                <a class="card-link" href="#" target="_blank" rel="noopener">
+            <article class="card reveal-scale" data-cat="ml-ds" style="transition-delay:0.15s">
+                <a class="card-link" href="https://drive.google.com/drive/folders/1_uGsTPbqME07BZli_4rlWziPRuCiUUuw?usp=sharing" target="_blank" rel="noopener">
                     <div class="cover">
                         <img src="https://i.postimg.cc/y62GfYx2/Screenshot-2026-08-30-at-2-52-20-PM.png" alt="Automated Read-Aloud Assessment">
                         <span class="cover-tag">ML & Data Science</span>
@@ -708,16 +729,20 @@
                             <li>Education</li>
                             <li>Python</li>
                         </ul>
-                        <span class="arrow" aria-hidden="true">
-                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </span>
+
+                        <div style="margin-top: 1.5rem;">
+                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                                View Folder
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
+                        </div>
                     </div>
                 </a>
             </article>
             
             <!-- Project 4: Athletic Meet 2025 -->
-            <article class="card reveal-scale" data-cat="leadership" style="--h: 280; transition-delay:0.2s">
-                <a class="card-link" href="#" target="_blank" rel="noopener">
+            <article class="card reveal-scale" data-cat="leadership" style="transition-delay:0.2s">
+                <a class="card-link" href="https://drive.google.com/drive/folders/1XohcM5b5M4P9dy5ay3HGwy5ipQfYr9Sc?usp=sharing" target="_blank" rel="noopener">
                     <div class="cover">
                         <img src="https://i.postimg.cc/2jT6vM5D/Copy-of-Copy-of-IMG-9008.jpg" alt="Athletic Meet 2025">
                         <span class="cover-tag">Leadership & Comms</span>
@@ -736,16 +761,20 @@
                             <li>Teamwork</li>
                             <li>Sportsmanship</li>
                         </ul>
-                        <span class="arrow" aria-hidden="true">
-                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </span>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                                View Folder
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
+                        </div>
                     </div>
                 </a>
             </article>
 
             <!-- Project 5: Green Accelerator -->
-            <article class="card reveal-scale" data-cat="leadership" style="--h: 110; transition-delay:0.25s">
-                <a class="card-link" href="#" target="_blank" rel="noopener">
+            <article class="card reveal-scale" data-cat="leadership" style="transition-delay:0.25s">
+                <a class="card-link" href="https://drive.google.com/drive/folders/1ODNjIbwNPBFc2pGokA9PSJNF1m0K6Sk9?usp=sharing" target="_blank" rel="noopener">
                     <div class="cover">
                         <img src="https://i.postimg.cc/JnSW-cNS3/Screenshot-2026-08-30-at-3-07-41-PM.png" alt="Green Accelerator">
                         <span class="cover-tag">Leadership & Comms</span>
@@ -764,16 +793,20 @@
                             <li>Community</li>
                             <li>Culture</li>
                         </ul>
-                        <span class="arrow" aria-hidden="true">
-                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </span>
+
+                        <div style="margin-top: 1.5rem;">
+                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                                View Folder
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
+                        </div>
                     </div>
                 </a>
             </article>
 
             <!-- Project 6: e-Yantra -->
-            <article class="card reveal-scale" data-cat="technology" style="--h: 200; transition-delay:0.3s">
-                <a class="card-link" href="#" target="_blank" rel="noopener">
+            <article class="card reveal-scale" data-cat="technology" style="transition-delay:0.3s">
+                <a class="card-link" href="https://drive.google.com/drive/folders/122adv9bmpiWKbGBOp-U-kSNR1ojiXDoA?usp=sharing" target="_blank" rel="noopener">
                     <div class="cover">
                         <img src="https://i.postimg.cc/QCLdxZN1/Screenshot-2026-08-30-at-3-21-38-PM.png" alt="e-Yantra">
                         <span class="cover-tag">Technology</span>
@@ -792,16 +825,20 @@
                             <li>Photogrammetry</li>
                             <li>Digital Storytelling</li>
                         </ul>
-                        <span class="arrow" aria-hidden="true">
-                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </span>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                                View Folder
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
+                        </div>
                     </div>
                 </a>
             </article>
             
             <!-- Project 7: Mathematics Webcast -->
-            <article class="card reveal-scale" data-cat="leadership" style="--h: 60; transition-delay:0.35s">
-                <a class="card-link" href="#" target="_blank" rel="noopener">
+            <article class="card reveal-scale" data-cat="leadership" style="transition-delay:0.35s">
+                <a class="card-link" href="https://drive.google.com/drive/folders/13wMSjHBoHIusnfzzd5Ayb6xOoW6KGGSH?usp=drive_link" target="_blank" rel="noopener">
                     <div class="cover">
                         <img src="https://i.postimg.cc/Pq3M72X7/Screenshot-2026-08-30-at-3-27-41-PM.png" alt="Mathematics Webcast">
                         <span class="cover-tag">Leadership & Comms</span>
@@ -820,9 +857,13 @@
                             <li>Mathematics</li>
                             <li>Leadership</li>
                         </ul>
-                        <span class="arrow" aria-hidden="true">
-                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </span>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                                View Folder
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
+                        </div>
                     </div>
                 </a>
             </article>
@@ -878,108 +919,110 @@
 
         var intro = document.getElementById('intro');
         var hero = document.getElementById('top');
-        var introName = document.getElementById('introName');
-        var introDone = false;
-
-        if (intro && introName) {
-            (introName.getAttribute('data-name') || '').split('').forEach(function (ch, i) {
-                var span = document.createElement('span');
-                if (ch === ' ') {
-                    span.className = 'char space';
-                    span.innerHTML = '&nbsp;';
+        var nav = document.getElementById('nav');
+        var cursorGlow = document.getElementById('cursorGlow');
+        
+        var nameContainer = document.getElementById('introName');
+        if (nameContainer) {
+            var text = nameContainer.getAttribute('data-name');
+            var html = '';
+            for (var i = 0; i < text.length; i++) {
+                if (text[i] === ' ') {
+                    html += '<span class="space"></span>';
                 } else {
-                    span.className = 'char';
-                    span.textContent = ch;
+                    html += '<span class="char" style="animation-delay: ' + (0.4 + i * 0.04) + 's">' + text[i] + '</span>';
                 }
-                span.style.animationDelay = (0.5 + i * 0.035) + 's';
-                introName.appendChild(span);
-            });
-        }
-
-        function endIntro() {
-            if (introDone) return;
-            introDone = true;
-            if (intro) {
-                intro.classList.add('exit');
-                setTimeout(function () { intro.style.display = 'none'; }, 900);
             }
-            if (hero) hero.classList.add('loaded');
+            nameContainer.innerHTML = html;
         }
 
         if (intro) {
-            intro.addEventListener('click', endIntro);
-            window.addEventListener('keydown', function (e) {
-                if (!introDone && (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ')) endIntro();
-            });
-            window.addEventListener('wheel', endIntro, { passive: true, once: true });
-            window.addEventListener('touchstart', endIntro, { passive: true, once: true });
-            setTimeout(endIntro, reduceMotion ? 300 : 2600);   
-            setTimeout(endIntro, 6000);                        
-        } else {
-            endIntro();
+            if (sessionStorage.getItem('introPlayed')) {
+                intro.style.display = 'none';
+                document.documentElement.style.overflow = '';
+                if(hero) hero.classList.add('loaded');
+                setTimeout(function() { nav.classList.add('show'); }, 100);
+            } else {
+                document.documentElement.style.overflow = 'hidden';
+                var skipIntro = function() {
+                    intro.classList.add('exit');
+                    document.documentElement.style.overflow = '';
+                    sessionStorage.setItem('introPlayed', 'true');
+                    setTimeout(function() { intro.style.display = 'none'; }, 900);
+                    if(hero) hero.classList.add('loaded');
+                    setTimeout(function() { nav.classList.add('show'); }, 600);
+                };
+                intro.addEventListener('click', skipIntro);
+                setTimeout(skipIntro, 4000);
+            }
         }
 
-        var revealEls = document.querySelectorAll('.reveal, .reveal-scale');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                nav.style.background = 'color-mix(in srgb, var(--bg) 85%, transparent)';
+                nav.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
+            } else {
+                nav.style.background = 'color-mix(in srgb, var(--bg) 75%, transparent)';
+                nav.style.boxShadow = 'none';
+            }
+        }, { passive: true });
+
+        if (!reduceMotion && cursorGlow) {
+            window.addEventListener('mousemove', function(e) {
+                requestAnimationFrame(function() {
+                    cursorGlow.style.transform = 'translate(' + (e.clientX - 210) + 'px, ' + (e.clientY - 210) + 'px)';
+                });
+            }, { passive: true });
+        }
+
         if ('IntersectionObserver' in window && !reduceMotion) {
-            var observer = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-            revealEls.forEach(function (el) { observer.observe(el); });
-        } else {
-            revealEls.forEach(function (el) { el.classList.add('visible'); });
-        }
+            }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
 
-        var nav = document.getElementById('nav');
-        if (nav) {
-            var onScroll = function () {
-                nav.classList.toggle('show', window.scrollY > window.innerHeight * 0.7);
-            };
-            window.addEventListener('scroll', onScroll, { passive: true });
-            onScroll();
+            document.querySelectorAll('.reveal, .reveal-scale').forEach(function(el) {
+                observer.observe(el);
+            });
+        } else {
+            document.querySelectorAll('.reveal, .reveal-scale').forEach(function(el) {
+                el.classList.add('visible');
+            });
         }
 
         var filters = document.querySelectorAll('.filter');
-        var cards = document.querySelectorAll('#grid .card');
-        filters.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                var cat = btn.getAttribute('data-filter');
-                filters.forEach(function (b) {
-                    var on = b === btn;
-                    b.classList.toggle('on', on);
-                    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        var cards = document.querySelectorAll('.card');
+        
+        filters.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                filters.forEach(function(f) { 
+                    f.classList.remove('on');
+                    f.setAttribute('aria-pressed', 'false');
                 });
-                cards.forEach(function (card) {
-                    var show = cat === 'all' || card.getAttribute('data-cat') === cat;
-                    card.classList.toggle('is-hidden', !show);
-                    if (show) card.classList.add('visible');
+                this.classList.add('on');
+                this.setAttribute('aria-pressed', 'true');
+                
+                var filterValue = this.getAttribute('data-filter');
+                
+                cards.forEach(function(card) {
+                    if (filterValue === 'all' || card.getAttribute('data-cat') === filterValue) {
+                        card.classList.remove('is-hidden');
+                        setTimeout(function(){ card.style.opacity = '1'; card.style.transform = 'none'; }, 50);
+                    } else {
+                        card.style.opacity = '0'; card.style.transform = 'scale(0.95)';
+                        setTimeout(function(){ card.classList.add('is-hidden'); }, 300);
+                    }
                 });
             });
         });
 
-        var glow = document.getElementById('cursorGlow');
-        if (glow && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduceMotion) {
-            var gx = 0, gy = 0, cx = 0, cy = 0, raf = null;
-            var follow = function () {
-                cx += (gx - cx) * 0.12;
-                cy += (gy - cy) * 0.12;
-                glow.style.transform = 'translate(' + (cx - 210) + 'px,' + (cy - 210) + 'px)';
-                raf = (Math.abs(gx - cx) > 0.5 || Math.abs(gy - cy) > 0.5) ? requestAnimationFrame(follow) : null;
-            };
-            document.addEventListener('mousemove', function (e) {
-                gx = e.clientX; gy = e.clientY;
-                if (!raf) raf = requestAnimationFrame(follow);
-            });
-        }
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-        var year = document.getElementById('year');
-        if (year) year.textContent = new Date().getFullYear();
     })();
     </script>
-
 </body>
 </html>
