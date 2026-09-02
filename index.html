@@ -280,6 +280,17 @@
         .btn:hover svg { transform: translateX(4px); }
         .btn-ghost { border-color: var(--border-strong); color: var(--text-muted); }
         .btn-ghost:hover { border-color: var(--text-muted); color: var(--text); background: rgba(255,255,255,0.05); }
+        
+        .card-actions {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .card-actions .btn {
+            padding: 8px 16px;
+            font-size: 0.7rem;
+        }
 
         .section { padding: 6rem 2rem; max-width: var(--maxw); margin: 0 auto; }
         .section-label {
@@ -399,13 +410,6 @@
             content: ''; position: absolute; inset: 0; z-index: 1;
             background: linear-gradient(180deg, transparent 45%, color-mix(in srgb, var(--bg) 80%, transparent) 100%);
         }
-        .cover-mark {
-            position: relative; z-index: 1;
-            font-family: var(--font-display); font-size: 3rem; font-weight: 700;
-            color: hsla(var(--h, 30), 78%, 74%, 0.5);
-            transition: color 0.5s, transform 0.6s var(--ease);
-        }
-        .card:hover .cover-mark { color: hsla(var(--h, 30), 82%, 78%, 0.8); transform: translateY(-3px); }
         
         .cover-tag {
             position: absolute; left: 14px; bottom: 12px; z-index: 2;
@@ -470,20 +474,6 @@
             border-color: color-mix(in srgb, var(--card-accent, var(--border)) 40%, transparent);
             color: var(--text-muted);
         }
-
-        .arrow {
-            position: absolute; top: 1.5rem; right: 1.5rem;
-            width: 30px; height: 30px; border-radius: 50%;
-            border: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.3s, border-color 0.3s, color 0.3s;
-        }
-        .card:hover .arrow { 
-            background: var(--card-accent, var(--accent)); 
-            border-color: var(--card-accent, var(--accent)); 
-            color: var(--bg); 
-        }
-        .arrow svg { width: 13px; height: 13px; }
 
         .contact-section { text-align: center; padding: 6rem 2rem 4rem; }
         .contact-section .section-title { margin-left: auto; margin-right: auto; text-align: center; }
@@ -556,6 +546,28 @@
             100% { transform: rotateX(360deg) rotateY(360deg); }
         }
 
+        /* Lightbox Modal */
+        .lightbox-modal {
+            display: none;
+            position: fixed; z-index: 10000; inset: 0;
+            background-color: rgba(9, 23, 26, 0.95);
+            backdrop-filter: blur(5px);
+            align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .lightbox-modal.show { display: flex; opacity: 1; }
+        .lightbox-content {
+            max-width: 90%; max-height: 90vh;
+            border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            object-fit: contain;
+        }
+        .close-lightbox {
+            position: absolute; top: 20px; right: 30px;
+            color: var(--text-muted); font-size: 40px; font-weight: bold;
+            cursor: pointer; transition: color 0.3s;
+        }
+        .close-lightbox:hover { color: var(--accent); }
+
         @media (max-width: 640px) {
             .section { padding: 4.5rem 1.5rem; }
             .contact-section { padding: 4.5rem 1.5rem 3rem; }
@@ -593,6 +605,12 @@
 
     <a href="#main" class="skip-link">Skip to content</a>
     <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+    <!-- Lightbox Modal -->
+    <div id="imageLightbox" class="lightbox-modal" aria-hidden="true">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        <img class="lightbox-content" id="lightboxImg" alt="Fullscreen Project View">
+    </div>
 
     <!-- Spinning Cube Container -->
     <div class="cube-wrapper" aria-hidden="true">
@@ -718,11 +736,15 @@
                             <li>Machine Learning</li>
                         </ul>
 
-                        <div style="margin-top: 1.5rem;">
-                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                        <div class="card-actions">
+                            <span class="btn btn-ghost">
                                 View Folder
-                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                             </span>
+                            <button class="btn btn-ghost" onclick="event.preventDefault(); event.stopPropagation(); openLightbox('https://i.postimg.cc/zXxbtxcD/images.png')">
+                                Fullscreen
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+                            </button>
                         </div>
                     </div>
                 </a>
@@ -750,11 +772,15 @@
                             <li>Problem Solving</li>
                         </ul>
 
-                        <div style="margin-top: 1.5rem;">
-                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                        <div class="card-actions">
+                            <span class="btn btn-ghost">
                                 View Folder
-                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                             </span>
+                            <button class="btn btn-ghost" onclick="event.preventDefault(); event.stopPropagation(); openLightbox('https://i.postimg.cc/k4Dq5ycJ/Stickers.jpg')">
+                                Fullscreen
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+                            </button>
                         </div>
                     </div>
                 </a>
@@ -782,11 +808,15 @@
                             <li>Python</li>
                         </ul>
 
-                        <div style="margin-top: 1.5rem;">
-                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                        <div class="card-actions">
+                            <span class="btn btn-ghost">
                                 View Folder
-                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                             </span>
+                            <button class="btn btn-ghost" onclick="event.preventDefault(); event.stopPropagation(); openLightbox('https://i.postimg.cc/y62GfYx2/Screenshot-2026-08-30-at-2-52-20-PM.png')">
+                                Fullscreen
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+                            </button>
                         </div>
                     </div>
                 </a>
@@ -814,11 +844,15 @@
                             <li>Sportsmanship</li>
                         </ul>
                         
-                        <div style="margin-top: 1.5rem;">
-                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                        <div class="card-actions">
+                            <span class="btn btn-ghost">
                                 View Folder
-                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                             </span>
+                            <button class="btn btn-ghost" onclick="event.preventDefault(); event.stopPropagation(); openLightbox('https://i.postimg.cc/2jT6vM5D/Copy-of-Copy-of-IMG-9008.jpg')">
+                                Fullscreen
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+                            </button>
                         </div>
                     </div>
                 </a>
@@ -846,11 +880,15 @@
                             <li>Culture</li>
                         </ul>
 
-                        <div style="margin-top: 1.5rem;">
-                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                        <div class="card-actions">
+                            <span class="btn btn-ghost">
                                 View Folder
-                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                             </span>
+                            <button class="btn btn-ghost" onclick="event.preventDefault(); event.stopPropagation(); openLightbox('https://i.postimg.cc/JnSW-cNS3/Screenshot-2026-08-30-at-3-07-41-PM.png')">
+                                Fullscreen
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+                            </button>
                         </div>
                     </div>
                 </a>
@@ -878,11 +916,15 @@
                             <li>Digital Storytelling</li>
                         </ul>
                         
-                        <div style="margin-top: 1.5rem;">
-                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                        <div class="card-actions">
+                            <span class="btn btn-ghost">
                                 View Folder
-                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                             </span>
+                            <button class="btn btn-ghost" onclick="event.preventDefault(); event.stopPropagation(); openLightbox('https://i.postimg.cc/QCLdxZN1/Screenshot-2026-08-30-at-3-21-38-PM.png')">
+                                Fullscreen
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+                            </button>
                         </div>
                     </div>
                 </a>
@@ -910,11 +952,15 @@
                             <li>Leadership</li>
                         </ul>
                         
-                        <div style="margin-top: 1.5rem;">
-                            <span class="btn btn-ghost" style="padding: 10px 20px; font-size: 0.75rem;">
+                        <div class="card-actions">
+                            <span class="btn btn-ghost">
                                 View Folder
-                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                             </span>
+                            <button class="btn btn-ghost" onclick="event.preventDefault(); event.stopPropagation(); openLightbox('https://i.postimg.cc/Pq3M72X7/Screenshot-2026-08-30-at-3-27-41-PM.png')">
+                                Fullscreen
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+                            </button>
                         </div>
                     </div>
                 </a>
@@ -953,6 +999,32 @@
     </footer>
 
     <script>
+    // Lightbox Logic Attached to Global Window
+    window.openLightbox = function(imgSrc) {
+        var modal = document.getElementById('imageLightbox');
+        var modalImg = document.getElementById('lightboxImg');
+        modalImg.src = imgSrc;
+        modal.style.display = 'flex';
+        // Allow rendering before transition applies
+        setTimeout(function() { modal.classList.add('show'); }, 10);
+        document.documentElement.style.overflow = 'hidden'; 
+    };
+
+    window.closeLightbox = function() {
+        var modal = document.getElementById('imageLightbox');
+        modal.classList.remove('show');
+        setTimeout(function() { modal.style.display = 'none'; }, 300);
+        document.documentElement.style.overflow = '';
+    };
+
+    // Close lightbox on clicking outside of the image
+    window.addEventListener('click', function(event) {
+        var modal = document.getElementById('imageLightbox');
+        if (event.target === modal) {
+            window.closeLightbox();
+        }
+    });
+
     window.toggleDescription = function(btn) {
         var descText = btn.previousElementSibling;
         if (descText.classList.contains('expanded')) {
