@@ -576,6 +576,82 @@
         }
         .close-lightbox:hover { color: var(--accent); }
 
+        /* CV Modal */
+        .cv-modal {
+            display: none;
+            position: fixed; z-index: 10000; inset: 0;
+            background-color: rgba(9, 23, 26, 0.95);
+            backdrop-filter: blur(5px);
+            align-items: flex-start; justify-content: center;
+            opacity: 0; transition: opacity 0.3s ease;
+            padding: 6vh 1.5rem 4vh;
+            overflow-y: auto;
+        }
+        .cv-modal.show { display: flex; opacity: 1; }
+        .cv-sheet {
+            position: relative;
+            width: 100%; max-width: 780px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem 2.5rem 2.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transform: translateY(16px);
+            transition: transform 0.35s var(--ease);
+        }
+        .cv-modal.show .cv-sheet { transform: translateY(0); }
+        .cv-header {
+            display: flex; align-items: flex-start; justify-content: space-between;
+            gap: 1.5rem; margin-bottom: 1.75rem;
+            padding-bottom: 1.75rem; border-bottom: 1px solid var(--border);
+        }
+        .cv-name { font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; color: var(--text); }
+        .cv-role { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-top: 0.4rem; }
+        .cv-contact { margin-top: 0.9rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.9; }
+        .cv-contact a { color: var(--text-muted); text-decoration: none; border-bottom: 1px dotted var(--border-strong); }
+        .cv-contact a:hover { color: var(--accent); }
+        .cv-actions { display: flex; gap: 0.6rem; flex-shrink: 0; }
+        .cv-icon-btn {
+            width: 38px; height: 38px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid var(--border-strong); background: transparent;
+            color: var(--text-muted); cursor: pointer; transition: all 0.25s;
+        }
+        .cv-icon-btn:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+        .cv-icon-btn svg { width: 17px; height: 17px; }
+
+        .cv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 2.5rem; }
+        .cv-block { margin-bottom: 1.75rem; }
+        .cv-block h3 {
+            font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--accent-2); margin-bottom: 0.9rem;
+        }
+        .cv-block ul { list-style: none; }
+        .cv-block li {
+            font-size: 0.88rem; color: var(--text); line-height: 1.6;
+            padding-left: 1.1rem; position: relative; margin-bottom: 0.5rem;
+        }
+        .cv-block li::before {
+            content: ''; position: absolute; left: 0; top: 0.65em;
+            width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+        }
+        .cv-block .cv-sub { display: block; font-size: 0.78rem; color: var(--text-dim); margin-top: 0.15rem; }
+        .cv-edu-item { margin-bottom: 0.8rem; }
+        .cv-edu-item .cv-school { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+        .cv-edu-item .cv-years { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); }
+        .cv-full { grid-column: 1 / -1; }
+        @media (max-width: 620px) {
+            .cv-sheet { padding: 2.2rem 1.4rem 2rem; }
+            .cv-grid { grid-template-columns: 1fr; gap: 0 0; }
+            .cv-header { flex-direction: column; }
+        }
+        @media print {
+            body > *:not(.cv-modal) { display: none !important; }
+            .cv-modal { position: static; background: none; backdrop-filter: none; display: block !important; opacity: 1; padding: 0; }
+            .cv-sheet { box-shadow: none; border: none; transform: none; max-width: 100%; }
+            .cv-actions { display: none !important; }
+        }
+
         @media (max-width: 640px) {
             .section { padding: 4.5rem 1.5rem; }
             .contact-section { padding: 4.5rem 1.5rem 3rem; }
@@ -618,6 +694,89 @@
     <div id="imageLightbox" class="lightbox-modal" aria-hidden="true">
         <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
         <img class="lightbox-content" id="lightboxImg" alt="Fullscreen Project View">
+    </div>
+
+    <!-- CV Modal -->
+    <div id="cvModal" class="cv-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cvName">
+        <div class="cv-sheet">
+            <div class="cv-header">
+                <div>
+                    <div class="cv-name" id="cvName">Kuenzang Kuenphel Norbu</div>
+                    <div class="cv-role">Student</div>
+                    <div class="cv-contact">
+                        <div>+975 17302928</div>
+                        <div><a href="mailto:norbukuenzang37@gmail.com">norbukuenzang37@gmail.com</a></div>
+                        <div>Thimphu, Bhutan</div>
+                    </div>
+                </div>
+                <div class="cv-actions">
+                    <button type="button" class="cv-icon-btn" onclick="window.print()" aria-label="Print or save as PDF" title="Print / Save as PDF">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6v-8z"/></svg>
+                    </button>
+                    <button type="button" class="cv-icon-btn" onclick="closeCVModal()" aria-label="Close CV">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="cv-grid">
+                <div class="cv-block cv-full">
+                    <h3>Education</h3>
+                    <div class="cv-edu-item">
+                        <div class="cv-school">The Royal Academy</div>
+                        <div class="cv-years">2021 – 2026</div>
+                    </div>
+                    <div class="cv-edu-item">
+                        <div class="cv-school">Little Dragon Primary School</div>
+                        <div class="cv-years">2014 – 2020</div>
+                    </div>
+                </div>
+
+                <div class="cv-block">
+                    <h3>Core Competencies</h3>
+                    <ul>
+                        <li>Analytical Thinking</li>
+                        <li>Effective Communication</li>
+                        <li>Problem Solving</li>
+                        <li>AI-Assisted Workflows</li>
+                        <li>Digital Collaboration</li>
+                        <li>Audience Engagement &amp; Live Broadcasting</li>
+                        <li>Software Development Support</li>
+                        <li>Adaptability &amp; Continuous Learning</li>
+                        <li>Team Collaboration</li>
+                        <li>Machine Learning</li>
+                    </ul>
+                </div>
+
+                <div class="cv-block">
+                    <h3>Language</h3>
+                    <ul>
+                        <li>English</li>
+                        <li>Dzongkha</li>
+                    </ul>
+                    <h3 style="margin-top:1.5rem;">Certifications</h3>
+                    <ul>
+                        <li>TRA Machine Learning (2026)</li>
+                        <li>Futsal Coaching Certification (2025)</li>
+                        <li>Python, HTML &amp; Java Courses</li>
+                    </ul>
+                </div>
+
+                <div class="cv-block cv-full">
+                    <h3>Extracurriculars</h3>
+                    <ul>
+                        <li>U-18 Bhutan Chess (Runner-Up 2023)</li>
+                        <li>SIMC 2026 Participant</li>
+                        <li>Athletics Meet 2025 Volunteer</li>
+                        <li>Space &amp; Tech Institute Venture</li>
+                        <li>Automated Read-Aloud Assessment</li>
+                        <li>e-Yantra Museum Competition</li>
+                        <li>Green Accelerator Project</li>
+                        <li>Mathematics Webcast Speaker</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Spinning Cube Container -->
@@ -667,7 +826,7 @@
                     See my work
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
-                <a href="#" class="btn btn-ghost">View CV</a>
+                <a href="#" class="btn btn-ghost" onclick="openCVModal(event)">View CV</a>
             </div>
         </div>
         <div class="scroll-indicator" aria-hidden="true">
@@ -1024,6 +1183,36 @@
         setTimeout(function() { modal.style.display = 'none'; }, 300);
         document.documentElement.style.overflow = '';
     };
+
+    // CV Modal Logic
+    window.openCVModal = function(event) {
+        if (event) { event.preventDefault(); }
+        var modal = document.getElementById('cvModal');
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+        setTimeout(function() { modal.classList.add('show'); }, 10);
+        document.documentElement.style.overflow = 'hidden';
+    };
+
+    window.closeCVModal = function() {
+        var modal = document.getElementById('cvModal');
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+        setTimeout(function() { modal.style.display = 'none'; }, 300);
+        document.documentElement.style.overflow = '';
+    };
+
+    window.addEventListener('click', function(event) {
+        var cvModal = document.getElementById('cvModal');
+        if (event.target === cvModal) { window.closeCVModal(); }
+    });
+
+    window.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            var cvModal = document.getElementById('cvModal');
+            if (cvModal && cvModal.classList.contains('show')) { window.closeCVModal(); }
+        }
+    });
 
     // Close lightbox on clicking outside of the image
     window.addEventListener('click', function(event) {
