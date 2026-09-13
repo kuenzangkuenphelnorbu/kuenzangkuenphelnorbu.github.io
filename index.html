@@ -320,22 +320,76 @@
             background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
         }
 
-        .toolkit { margin-top: 3rem; }
-        .toolkit h3 {
+        /* Toolkit Grid Styles */
+        .toolkit-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.75rem;
+            margin-top: 3.5rem;
+        }
+        .toolkit-category {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .toolkit-category h3 {
             font-family: var(--font-mono);
-            font-size: 0.66rem; letter-spacing: 0.26em; text-transform: uppercase;
-            color: var(--text-dim); font-weight: 500; margin-bottom: 1rem;
+            font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+            color: var(--text-dim); margin-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-strong);
+            padding-bottom: 0.75rem;
         }
-        .toolkit-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.75rem; }
-        .tool {
-            font-family: var(--font-mono); font-size: 0.73rem;
-            padding: 6px 14px; border-radius: 999px;
-            border: 1px solid var(--border); background: var(--bg-card); color: var(--text-muted);
-            transition: border-color 0.3s, color 0.3s, transform 0.3s var(--ease);
+        .toolkit-items {
+            display: flex; flex-direction: column; gap: 0.85rem;
         }
-        .tool:hover {
-            border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-            color: var(--text); transform: translateY(-2px);
+        .tool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.15rem;
+            display: flex; flex-direction: column; gap: 0.6rem;
+            transition: transform 0.4s var(--ease), border-color 0.4s, background 0.4s, box-shadow 0.4s;
+        }
+        .tool-card:hover {
+            background: color-mix(in srgb, var(--bg-card) 40%, var(--bg-elevated));
+            border-color: color-mix(in srgb, var(--hover-color, var(--accent)) 40%, transparent);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .tool-header {
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .tool-icon {
+            width: 26px; height: 26px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .tool-icon svg {
+            width: 100%; height: 100%;
+            fill: currentColor;
+            color: var(--text-muted);
+            transition: color 0.4s, transform 0.4s var(--ease), filter 0.4s;
+        }
+        .tool-icon svg.stroke-icon {
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+        .tool-card:hover .tool-icon svg {
+            color: var(--hover-color, var(--accent));
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 8px color-mix(in srgb, var(--hover-color, var(--accent)) 40%, transparent));
+        }
+        .tool-name {
+            font-family: var(--font-display);
+            font-size: 1.05rem; font-weight: 600;
+            color: var(--text);
+        }
+        .tool-subtext {
+            font-size: 0.8rem; color: var(--text-dim); line-height: 1.5;
+            transition: color 0.3s;
+        }
+        .tool-card:hover .tool-subtext {
+            color: var(--text-muted);
         }
 
         /* Category Base Colors */
@@ -640,6 +694,9 @@
         .cv-edu-item .cv-school { font-size: 0.9rem; color: var(--text); font-weight: 500; }
         .cv-edu-item .cv-years { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); }
         .cv-full { grid-column: 1 / -1; }
+        @media (max-width: 820px) {
+            .toolkit-grid { grid-template-columns: 1fr; gap: 2.25rem; }
+        }
         @media (max-width: 620px) {
             .cv-sheet { padding: 2.2rem 1.4rem 2rem; }
             .cv-grid { grid-template-columns: 1fr; gap: 0 0; }
@@ -826,7 +883,7 @@
                     See my work
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
-                <a href="https://drive.google.com/drive/folders/1ynrhvHgOJfwZRj9T5DLSflSSj1qC9gNR?usp=sharing" target="_blank" rel="noopener" class="btn btn-ghost">View CV</a>
+                <button class="btn btn-ghost" onclick="openCVModal(event)">View CV</button>
             </div>
         </div>
         <div class="scroll-indicator" aria-hidden="true">
@@ -851,13 +908,103 @@
             <p>Most of what I've learned to date is self-taught, and it is the best part of my journey. I am continuously learning how to learn and adapt, which is the most important skill of all.</p>
         </div>
 
-        <div class="toolkit reveal" style="transition-delay:0.24s">
-            <h3>Building with</h3>
-            <div class="toolkit-row">
-                <span class="tool">Machine Learning</span>
-                <span class="tool">Data Science</span>
-                <span class="tool">Coding</span>
-                <span class="tool">Mathematics</span>
+        <div class="toolkit-grid reveal" style="transition-delay:0.24s">
+            <!-- Languages & Web Column -->
+            <div class="toolkit-category">
+                <h3>Languages & Web</h3>
+                <div class="toolkit-items">
+                    <div class="tool-card" style="--hover-color: #3776AB;">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <svg viewBox="0 0 24 24"><path d="M12.003.013c-3.535 0-4.004.605-4.004.605L7.994 2.19v2.793h4.006v.558H6.551s-1.896-.231-1.896 3.013c0 3.243 1.956 3.226 1.956 3.226h1.408v-2.005s-.014-2.28 2.278-2.28h4.296s2.15.013 2.15-2.073V2.418s.22-1.921-2.735-2.405h-2.005zm-1.892 1.34c.451 0 .813.364.813.815 0 .45-.362.813-.813.813a.816.816 0 0 1-.815-.813c0-.451.364-.815.815-.815zM12 23.987c3.535 0 4.004-.605 4.004-.605l.005-1.572v-2.793H12v-.558h5.449s1.896.231 1.896-3.013c0-3.243-1.956-3.226-1.956-3.226h-1.408v2.005s.014 2.28-2.278 2.28H9.407s-2.15-.013-2.15 2.073v2.996s-.22 1.921 2.735 2.405H12zm1.892-1.34a.816.816 0 0 1-.813-.815c0-.45.362-.813.813-.813a.816.816 0 0 1 .815.813c0 .451-.364.815-.815.815z"/></svg>
+                            </div>
+                            <span class="tool-name">Python</span>
+                        </div>
+                        <p class="tool-subtext">Primary driver for machine learning and data science workflows.</p>
+                    </div>
+
+                    <div class="tool-card" style="--hover-color: #f89820;">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <svg viewBox="0 0 24 24"><path d="M15.42 16.326c-1.378-.636-2.585-.689-5.18-.328-1.782.253-1.488.586-.531.782 1.905.39 3.522.68 5.71.18 1.109-.251.728-.293.001-.634zm-8.082-2.316c.394 1.372 3.036 1.481 4.542 1.481 2.277 0 4.192-1.042 5.097-1.579.576-.341.319-.884-.367-.406-2.502 1.748-6.104 2.074-9.027.674-1.282-.612-1.353-.949-.245-1.127-1.891-.082-3.149-1.096-3.149-1.921 0-.96 1.636-1.953 4.887-2.73.491-.116.376-.566-.02-.455-4.813 1.332-6.273 2.871-6.273 3.997 0 1.258 1.677 2.43 4.555 3.06z"/></svg>
+                            </div>
+                            <span class="tool-name">Java</span>
+                        </div>
+                        <p class="tool-subtext">Object-oriented software engineering foundation.</p>
+                    </div>
+
+                    <div class="tool-card" style="--hover-color: #E34F26;">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <svg viewBox="0 0 24 24"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm17.09 4.169H5.41l.245 2.764h11.27l-.213 2.39H5.9l.255 2.85h10.53l-.532 5.968-4.175 1.127-4.195-1.127-.266-2.983H5.06l.372 4.966 6.543 1.815 6.553-1.815.86-9.626z"/></svg>
+                            </div>
+                            <span class="tool-name">HTML</span>
+                        </div>
+                        <p class="tool-subtext">Structural web implementation and precise UI execution.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Specialized Software Column -->
+            <div class="toolkit-category">
+                <h3>Specialized Software</h3>
+                <div class="toolkit-items">
+                    <div class="tool-card" style="--hover-color: #F5792A;">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <svg viewBox="0 0 24 24"><path d="M15.111 1.706a10.871 10.871 0 0 0-4.045.748L8.134 3.398c-1.328.618-2.518 1.498-3.513 2.593-1.748 1.942-2.827 4.398-3.084 7.026a11.134 11.134 0 0 0 .546 4.793 11.233 11.233 0 0 0 2.217 3.992l.063.076a.326.326 0 0 0 .422.051l3.35-2.09c.307-.19.537-.478.653-.82a1.722 1.722 0 0 0 .041-1.077c-.126-.412-.38-.767-.723-.997a3.42 3.42 0 0 1-1.314-1.956 3.523 3.523 0 0 1-.034-1.637 3.551 3.551 0 0 1 1.01-1.9 3.541 3.541 0 0 1 1.776-.92c.624-.108 1.267-.024 1.84.24a3.543 3.543 0 0 1 1.342 1.155l3.801-6.195a.442.442 0 0 0 .05-.333.432.432 0 0 0-.214-.282L15.11 1.706Zm-4.996 9.68a1.644 1.644 0 0 0-1.127.322 1.637 1.637 0 0 0-.583.995 1.624 1.624 0 0 0 .151 1.171 1.632 1.632 0 0 0 .867.766 1.642 1.642 0 0 0 1.218-.049 1.63 1.63 0 0 0 .785-.85 1.626 1.626 0 0 0-.022-1.22 1.637 1.637 0 0 0-.663-.799 1.64 1.64 0 0 0-.626-.336ZM16.48 4.6l.006.012 3.327 7.917c.231.545.337 1.135.314 1.728a4.912 4.912 0 0 1-.77 2.535 4.935 4.935 0 0 1-1.944 1.76c-.612.3-1.282.463-1.96.48a4.92 4.92 0 0 1-2.457-.557c-.6-.316-1.118-.767-1.517-1.315-.398-.55-.672-1.185-.798-1.854a5.048 5.048 0 0 1 .084-2.185l-.04.062 3.997-6.52a.333.333 0 0 1 .444-.12l1.315.658ZM14.93 11.23a3.003 3.003 0 0 0-1.096.34 2.973 2.973 0 0 0-1.423 2.146 3.005 3.005 0 0 0 .614 2.378 2.984 2.984 0 0 0 2.215.992 3.006 3.006 0 0 0 2.083-.758 2.98 2.98 0 0 0 .86-2.19 3.01 3.01 0 0 0-1.183-2.19 2.977 2.977 0 0 0-2.07-.718Z"/></svg>
+                            </div>
+                            <span class="tool-name">Blender</span>
+                        </div>
+                        <p class="tool-subtext">Spatial reasoning and 3D design utilized in complex hardware challenges like the e-Yantra project.</p>
+                    </div>
+
+                    <div class="tool-card" style="--hover-color: #E01E5A;">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <svg viewBox="0 0 24 24"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
+                            </div>
+                            <span class="tool-name">Workspace Apps (Slack)</span>
+                        </div>
+                        <p class="tool-subtext">Agile coordination and seamless communication within asynchronous professional team environments.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI & Developer Tools Column -->
+            <div class="toolkit-category">
+                <h3>AI & Developer Tools</h3>
+                <div class="toolkit-items">
+                    <div class="tool-card" style="--hover-color: #a371f7;">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <svg class="stroke-icon" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+                            </div>
+                            <span class="tool-name">GitHub Copilot</span>
+                        </div>
+                        <p class="tool-subtext">Rapid code iteration, intelligent pair programming, and efficient debugging.</p>
+                    </div>
+
+                    <div class="tool-card" style="--hover-color: #00e6e6;">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <svg viewBox="0 0 24 24"><path d="M2.5 12a10 10 0 0 0 9.5-9.5A10 10 0 0 0 21.5 12a10 10 0 0 0-9.5 9.5A10 10 0 0 0 2.5 12z"/></svg>
+                            </div>
+                            <span class="tool-name">Google Gemini</span>
+                        </div>
+                        <p class="tool-subtext">High-level assistant for complex research, architectural ideation, and workflow automation.</p>
+                    </div>
+                    
+                    <div class="tool-card" style="--hover-color: #D97757;">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <svg class="stroke-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg>
+                            </div>
+                            <span class="tool-name">Claude</span>
+                        </div>
+                        <p class="tool-subtext">Advanced reasoning, nuanced textual analysis, and generation of robust technical documentation.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
