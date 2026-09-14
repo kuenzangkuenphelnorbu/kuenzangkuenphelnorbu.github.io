@@ -144,6 +144,17 @@
         }
         @keyframes fadeIn { to { opacity: 1; } }
 
+        #constellation-bg {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            display: block;
+            pointer-events: none;
+            background: var(--bg);
+        }
+
         .grain {
             position: absolute; inset: 0; pointer-events: none; opacity: 0.035;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -744,6 +755,8 @@
 </head>
 <body>
 
+    <canvas id="constellation-bg" aria-hidden="true"></canvas>
+
     <a href="#main" class="skip-link">Skip to content</a>
     <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
@@ -883,7 +896,7 @@
                     See my work
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
-                <button class="btn btn-ghost" onclick="openCVModal(event)">View CV</button>
+                <a class="btn btn-ghost" href="https://drive.google.com/drive/folders/1zfYQa1rr1KcNLXtecIUGn0h6rM1zcuca?usp=sharing" target="_blank" rel="noopener noreferrer">View CV</a>
             </div>
         </div>
         <div class="scroll-indicator" aria-hidden="true">
@@ -1507,6 +1520,181 @@
 
         document.getElementById('year').textContent = new Date().getFullYear();
 
+    })();
+
+    // Interactive constellation background
+    (function () {
+        'use strict';
+
+        var canvas = document.getElementById('constellation-bg');
+        if (!canvas || !canvas.getContext) return;
+
+        var ctx = canvas.getContext('2d');
+        var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var ACCENT = '0, 230, 230';
+        var DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+        var particles = [];
+        var mouse = { x: null, y: null, radius: 150 };
+        var rafId = null;
+
+        function particleCount() {
+            var area = window.innerWidth * window.innerHeight;
+            return Math.min(150, Math.max(40, Math.floor(area / 13000)));
+        }
+
+        function initParticles() {
+            var count = particleCount();
+            particles = [];
+            for (var i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    r: Math.random() * 1.4 + 0.6
+                });
+            }
+        }
+
+        function resize() {
+            var w = window.innerWidth;
+            var h = window.innerHeight;
+            canvas.width = Math.floor(w * DPR);
+            canvas.height = Math.floor(h * DPR);
+            canvas.style.width = w + 'px';
+            canvas.style.height = h + 'px';
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+            initParticles();
+        }
+
+        function drawStatic() {
+            var W = window.innerWidth, H = window.innerHeight;
+            ctx.clearRect(0, 0, W, H);
+            for (var i = 0; i < particles.length; i++) {
+                var p = particles[i];
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(' + ACCENT + ', 0.5)';
+                ctx.fill();
+            }
+        }
+
+        function step() {
+            var W = window.innerWidth, H = window.innerHeight;
+            ctx.clearRect(0, 0, W, H);
+
+            var i, j, p, a, b, dx, dy, dist;
+
+            for (i = 0; i < particles.length; i++) {
+                p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x <= 0 || p.x >= W) { p.vx *= -1; }
+                if (p.y <= 0 || p.y >= H) { p.vy *= -1; }
+                p.x = Math.max(0, Math.min(W, p.x));
+                p.y = Math.max(0, Math.min(H, p.y));
+
+                if (mouse.x !== null) {
+                    dx = mouse.x - p.x;
+                    dy = mouse.y - p.y;
+                    dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < mouse.radius) {
+                        p.x += dx * 0.0025;
+                        p.y += dy * 0.0025;
+                    }
+                }
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(' + ACCENT + ', 0.75)';
+                ctx.fill();
+            }
+
+            for (i = 0; i < particles.length; i++) {
+                for (j = i + 1; j < particles.length; j++) {
+                    a = particles[i];
+                    b = particles[j];
+                    dx = a.x - b.x;
+                    dy = a.y - b.y;
+                    dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(a.x, a.y);
+                        ctx.lineTo(b.x, b.y);
+                        ctx.strokeStyle = 'rgba(' + ACCENT + ', ' + (0.16 * (1 - dist / 120)) + ')';
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            if (mouse.x !== null) {
+                for (i = 0; i < particles.length; i++) {
+                    p = particles[i];
+                    dx = mouse.x - p.x;
+                    dy = mouse.y - p.y;
+                    dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < mouse.radius) {
+                        ctx.beginPath();
+                        ctx.moveTo(mouse.x, mouse.y);
+                        ctx.lineTo(p.x, p.y);
+                        ctx.strokeStyle = 'rgba(' + ACCENT + ', ' + (0.4 * (1 - dist / mouse.radius)) + ')';
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            rafId = requestAnimationFrame(step);
+        }
+
+        var resizeTimeout;
+        window.addEventListener('resize', function () {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function () {
+                resize();
+                if (reduceMotion) { drawStatic(); }
+            }, 150);
+        }, { passive: true });
+
+        window.addEventListener('mousemove', function (e) {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        }, { passive: true });
+
+        window.addEventListener('mouseleave', function () {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        window.addEventListener('touchmove', function (e) {
+            if (e.touches && e.touches[0]) {
+                mouse.x = e.touches[0].clientX;
+                mouse.y = e.touches[0].clientY;
+            }
+        }, { passive: true });
+
+        window.addEventListener('touchend', function () {
+            mouse.x = null;
+            mouse.y = null;
+        }, { passive: true });
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+            } else if (!reduceMotion && !rafId) {
+                rafId = requestAnimationFrame(step);
+            }
+        });
+
+        resize();
+        if (reduceMotion) {
+            drawStatic();
+        } else {
+            rafId = requestAnimationFrame(step);
+        }
     })();
     </script>
 </body>
