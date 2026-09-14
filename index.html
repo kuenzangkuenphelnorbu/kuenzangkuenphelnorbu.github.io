@@ -205,14 +205,17 @@
             background: linear-gradient(rgba(9, 23, 26, 0.7), rgba(9, 23, 26, 0.9)), url('https://i.postimg.cc/pLkxv7tc/IMG20260528220950.jpg') center/cover no-repeat;
             transform: scale(1.1);
             transition: transform 9s ease-out;
+            -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
         }
         .hero.loaded .hero-bg { transform: scale(1); }
         .hero-overlay {
             position: absolute; inset: 0;
             background: linear-gradient(180deg,
                 color-mix(in srgb, var(--bg) 15%, transparent) 0%,
-                color-mix(in srgb, var(--bg) 70%, transparent) 76%,
-                var(--bg) 100%);
+                color-mix(in srgb, var(--bg) 55%, transparent) 55%,
+                color-mix(in srgb, var(--bg) 82%, transparent) 78%,
+                color-mix(in srgb, var(--bg) 90%, transparent) 100%);
         }
         .hero-content { position: relative; z-index: 2; text-align: center; padding: 6rem 2rem 2rem; max-width: 760px; }
 
